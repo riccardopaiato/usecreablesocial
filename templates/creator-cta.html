@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face{font-family:'Poppins';font-weight:900;src:url('../assets/fonts/poppins-latin-900-normal.woff2') format('woff2');}
+@font-face{font-family:'Poppins';font-weight:800;src:url('../assets/fonts/poppins-latin-800-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:500;src:url('../assets/fonts/inter-latin-500-normal.woff2') format('woff2');}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1350px}
+.card{position:relative;width:1080px;height:1350px;background:#f7f4ec;overflow:hidden;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+.sh{position:absolute;pointer-events:none}
+.logo{position:absolute;top:104px;left:50%;transform:translateX(-50%);z-index:10}
+.logo img{height:94px;width:auto;display:block}
+.block{position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);width:864px;text-align:center;z-index:10}
+.hd{font-family:'Poppins',sans-serif;font-weight:900;letter-spacing:-.04em;line-height:1.06;font-size:90px;color:#1c1d18}
+.hd .k{color:#8fc01a}
+.bd{font-family:'Inter',sans-serif;font-weight:500;line-height:1.5;font-size:44px;color:#5c5e52;margin:34px auto 0;max-width:864px}
+.cta{display:inline-flex;align-items:center;border-radius:100px;font-family:'Poppins',sans-serif;font-weight:800;font-size:42px;letter-spacing:-.01em;padding:28px 62px;background:#1c1d18;color:#8fc01a;margin-top:48px}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- playful flat pastel scatter (finale, bookend with cover) -->
+  <svg class="sh" style="top:-110px;left:-80px;width:320px;height:320px;opacity:.85;z-index:1" viewBox="0 0 100 100"><polygon points="50,2 61,38 99,38 68,61 79,97 50,74 21,97 32,61 1,38 39,38" fill="#FBBF24"/></svg>
+  <div class="sh" style="top:0px;right:-80px;width:300px;height:300px;border-radius:50%;background:#a78bfa;opacity:.5;z-index:1"></div>
+  <svg class="sh" style="top:200px;left:150px;width:120px;height:120px;opacity:.5;z-index:1" viewBox="0 0 100 100"><polygon points="50,4 96,50 50,96 4,50" fill="#ec4899"/></svg>
+  <div class="sh" style="top:175px;right:175px;width:96px;height:96px;border-radius:30%;background:#cdec8d;opacity:.6;transform:rotate(12deg);z-index:1"></div>
+  <svg class="sh" style="bottom:-50px;left:-40px;width:200px;height:232px;opacity:.6;z-index:1" viewBox="0 0 100 116"><path d="M50 6 C50 6 86 54 86 74 C86 96 70 110 50 110 C30 110 14 96 14 74 C14 54 50 6 50 6 Z" fill="#ec4899"/></svg>
+  <svg class="sh" style="bottom:60px;left:240px;width:130px;height:130px;opacity:.55;z-index:1" viewBox="0 0 100 100"><circle cx="50" cy="24" r="24" fill="#FBBF24"/><circle cx="76" cy="50" r="24" fill="#FBBF24"/><circle cx="50" cy="76" r="24" fill="#FBBF24"/><circle cx="24" cy="50" r="24" fill="#FBBF24"/><circle cx="50" cy="50" r="26" fill="#FBBF24"/></svg>
+  <div class="sh" style="bottom:-90px;right:-70px;width:320px;height:320px;border-radius:50%;background:#F97316;opacity:.45;z-index:1"></div>
+  <div class="sh" style="bottom:140px;right:130px;width:110px;height:110px;border-radius:50%;background:#a78bfa;opacity:.5;z-index:1"></div>
+
+  <!-- logo -->
+  <div class="logo"><img src="../assets/uc-lime.png" alt="UC"></div>
+
+  <!-- text block -->
+  <div class="block">
+    <p class="hd">Join the new era<br>of <span class="k">AI creators.</span></p>
+    <p class="bd">Sign up for the waiting list.<br>Get early access to the marketplace.</p>
+    <div class="cta">usecreable.com</div>
+  </div>
+
+</div>
+</body>
+</html>

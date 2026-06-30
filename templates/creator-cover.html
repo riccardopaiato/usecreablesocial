@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face{font-family:'Poppins';font-weight:900;src:url('../assets/fonts/poppins-latin-900-normal.woff2') format('woff2');}
+@font-face{font-family:'Poppins';font-weight:800;src:url('../assets/fonts/poppins-latin-800-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:500;src:url('../assets/fonts/inter-latin-500-normal.woff2') format('woff2');}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1350px}
+.card{position:relative;width:1080px;height:1350px;background:#f7f4ec;overflow:hidden;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+.sh{position:absolute;pointer-events:none}
+.logo{position:absolute;top:104px;left:50%;transform:translateX(-50%);z-index:10}
+.logo img{height:94px;width:auto;display:block}
+.block{position:absolute;top:47%;left:50%;transform:translate(-50%,-50%);width:864px;text-align:center;z-index:10}
+.hd{font-family:'Poppins',sans-serif;font-weight:900;letter-spacing:-.04em;line-height:1.05;font-size:96px;color:#1c1d18}
+.hd .k{color:#8fc01a}
+.bd{font-family:'Inter',sans-serif;font-weight:500;line-height:1.5;font-size:44px;color:#5c5e52;margin:38px auto 0;max-width:864px}
+.eye{margin-top:50px;display:inline-flex;align-items:center;gap:18px;border:2.5px solid rgba(28,29,24,.4);border-radius:100px;padding:22px 44px;color:#1c1d18;font-family:'Poppins',sans-serif;font-weight:800;font-size:32px;letter-spacing:-.01em}
+.eye .ar{display:block;margin-top:2px}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- PLAYFUL cover: flat pastel paper-cutout shapes filling all the edges (no blur) -->
+  <!-- TOP band -->
+  <svg class="sh" style="top:-110px;left:-80px;width:320px;height:320px;opacity:.85;z-index:1" viewBox="0 0 100 100"><polygon points="50,2 61,38 99,38 68,61 79,97 50,74 21,97 32,61 1,38 39,38" fill="#FBBF24"/></svg>
+  <svg class="sh" style="top:160px;left:150px;width:140px;height:140px;opacity:.5;z-index:1" viewBox="0 0 100 100"><polygon points="50,4 96,50 50,96 4,50" fill="#ec4899"/></svg>
+  <div class="sh" style="top:30px;right:-90px;width:300px;height:110px;border-radius:55px;background:#F97316;opacity:.6;transform:rotate(38deg);z-index:1"></div>
+  <div class="sh" style="top:175px;right:170px;width:120px;height:120px;border-radius:32%;background:#a78bfa;opacity:.5;transform:rotate(12deg);z-index:1"></div>
+  <svg class="sh" style="top:175px;left:340px;width:92px;height:92px;opacity:.5;z-index:1" viewBox="0 0 100 100"><polygon points="50,0 58,42 100,50 58,58 50,100 42,58 0,50 42,42" fill="#cdec8d"/></svg>
+  <!-- BOTTOM band -->
+  <div class="sh" style="bottom:-110px;right:-90px;width:330px;height:330px;border-radius:50%;background:#a78bfa;opacity:.5;z-index:1"></div>
+  <svg class="sh" style="bottom:-40px;left:-40px;width:190px;height:220px;opacity:.6;z-index:1" viewBox="0 0 100 116"><path d="M50 6 C50 6 86 54 86 74 C86 96 70 110 50 110 C30 110 14 96 14 74 C14 54 50 6 50 6 Z" fill="#ec4899"/></svg>
+  <svg class="sh" style="bottom:60px;left:230px;width:130px;height:130px;opacity:.55;z-index:1" viewBox="0 0 100 100"><circle cx="50" cy="24" r="24" fill="#FBBF24"/><circle cx="76" cy="50" r="24" fill="#FBBF24"/><circle cx="50" cy="76" r="24" fill="#FBBF24"/><circle cx="24" cy="50" r="24" fill="#FBBF24"/><circle cx="50" cy="50" r="26" fill="#FBBF24"/></svg>
+  <div class="sh" style="bottom:130px;right:150px;width:120px;height:120px;border-radius:50%;background:#F97316;opacity:.5;z-index:1"></div>
+  <svg class="sh" style="bottom:-50px;left:50%;transform:translateX(-50%);width:150px;height:150px;opacity:.5;z-index:1" viewBox="0 0 100 100"><polygon points="50,4 96,50 50,96 4,50" fill="#cdec8d"/></svg>
+
+  <!-- logo -->
+  <div class="logo"><img src="../assets/uc-lime.png" alt="UC"></div>
+
+  <!-- text block -->
+  <div class="block">
+    <p class="hd">Start <span class="k">earning</span><br>with AI<br>in 30 days.</p>
+    <p class="bd">No face, no followers needed.<br>Your laptop and AI toolkit are enough.</p>
+    <div class="eye">Swipe <svg class="ar" width="46" height="24" viewBox="0 0 46 24" fill="none"><path d="M3 12 H40 M30 4 L41 12 L30 20" stroke="#8fc01a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+</div>
+</body>
+</html>

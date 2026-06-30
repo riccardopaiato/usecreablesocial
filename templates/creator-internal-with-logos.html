@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@font-face{font-family:'Poppins';font-weight:900;src:url('../assets/fonts/poppins-latin-900-normal.woff2') format('woff2');}
+@font-face{font-family:'Poppins';font-weight:700;src:url('../assets/fonts/poppins-latin-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:500;src:url('../assets/fonts/inter-latin-500-normal.woff2') format('woff2');}
+@font-face{font-family:'JetBrains Mono';font-weight:500;src:url('../assets/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2');}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1350px}
+.card{position:relative;width:1080px;height:1350px;background:#f7f4ec;overflow:hidden;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+.sh{position:absolute;pointer-events:none}
+.logo{position:absolute;top:104px;left:50%;transform:translateX(-50%);z-index:10}
+.logo img{height:94px;width:auto;display:block}
+.block{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:864px;text-align:center;z-index:10}
+.day{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:38px;letter-spacing:.16em;text-transform:uppercase;color:#8fc01a;margin-bottom:24px}
+.hd{font-family:'Poppins',sans-serif;font-weight:900;letter-spacing:-.04em;line-height:1.06;font-size:84px;color:#1c1d18}
+.hd .k{color:#8fc01a}
+.bd{font-family:'Inter',sans-serif;font-weight:500;line-height:1.5;font-size:44px;color:#5c5e52;margin:34px auto 0;max-width:864px}
+.panel{display:inline-flex;align-items:center;gap:54px;background:#fff;border-radius:42px;padding:44px 56px;box-shadow:0 12px 36px rgba(28,29,24,.07);margin-top:48px}
+.panel img{height:108px;width:auto;display:block;opacity:.95}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- flat pastel shapes, scattered (internal) -->
+  <svg class="sh" style="top:-80px;left:-60px;width:280px;height:280px;opacity:.55;z-index:1" viewBox="0 0 100 100"><path d="M50 6 C74 2 96 22 94 48 C99 74 74 98 48 94 C22 98 4 74 8 48 C4 22 26 10 50 6 Z" fill="#a78bfa"/></svg>
+  <svg class="sh" style="top:-70px;right:-55px;width:260px;height:260px;opacity:.7;z-index:1" viewBox="0 0 100 100"><polygon points="50,4 96,50 50,96 4,50" fill="#FBBF24"/></svg>
+  <svg class="sh" style="bottom:-70px;left:-50px;width:230px;height:266px;opacity:.55;z-index:1" viewBox="0 0 100 116"><path d="M50 6 C50 6 86 54 86 74 C86 96 70 110 50 110 C30 110 14 96 14 74 C14 54 50 6 50 6 Z" fill="#ec4899"/></svg>
+  <div class="sh" style="bottom:40px;right:-90px;width:300px;height:110px;border-radius:55px;background:#F97316;opacity:.5;transform:rotate(34deg);z-index:1"></div>
+
+  <!-- logo -->
+  <div class="logo"><img src="../assets/uc-lime.png" alt="UC"></div>
+
+  <!-- text block -->
+  <div class="block">
+    <div class="day">Days 2&ndash;5</div>
+    <p class="hd">Usecreable Academy<br>gets you <span class="k">started.</span></p>
+    <p class="bd">12 hours of videos teach you<br>AI content creation from zero.</p>
+    <div class="panel">
+      <img src="../assets/logos/kling.png" alt="Kling">
+      <img src="../assets/logos/higgsfield.png" alt="Higgsfield">
+      <img src="../assets/logos/runway.png" alt="Runway">
+      <img src="../assets/logos/veo3.png" alt="Veo 3">
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

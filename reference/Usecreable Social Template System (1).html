@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>usecreable · Social Template System v3</title>
+<template id="__bundler_thumbnail" data-bg-color="#f7f4ec">
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="1200" height="800" fill="#f7f4ec"/>
+<circle cx="320" cy="380" r="180" fill="#8fc01a"/>
+<circle cx="700" cy="300" r="110" fill="#FBBF24" opacity="0.85"/>
+<path d="M820 480 C820 480 940 580 940 640 C940 700 900 730 850 730 C800 730 760 700 760 640 C760 580 820 480 820 480Z" fill="#A78BFA" opacity="0.85"/>
+<text x="600" y="430" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="900" font-size="120" fill="#1c1d18" letter-spacing="-6">UC</text>
+</svg>
+</template>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+--l50:#f3fbe1;--l100:#e6f6c4;--l200:#cdec8d;--l300:#b6e052;--l400:#a4d435;
+--p:#8fc01a;--l600:#6ea311;--l700:#527d0d;
+--bg:#f7f4ec;--bg2:#efeadd;--sf:#ffffff;--ink:#1c1d18;
+--dbg:#000000;--ds:#1A1B16;--ds2:#22231D;--mt:#9CA396;
+--lime:#A5E635;--or:#F97316;--mg:#EC4899;--yl:#FBBF24;--lv:#A78BFA;--pk:#FBCFE8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f0ede5;color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* NAV */
+.top{position:sticky;top:0;z-index:200;background:var(--ink);display:flex;align-items:center;padding:0 24px;height:50px;gap:12px}
+.top .lg{width:26px;height:26px;background:var(--p);border-radius:7px;display:grid;place-items:center;font:900 10px/1 'Poppins',sans-serif;color:var(--ink);letter-spacing:-.03em;flex-shrink:0}
+.top .tt{font:800 14px/1 'Poppins',sans-serif;color:var(--bg);letter-spacing:-.02em}
+.top .vr{font:500 9px/1 'JetBrains Mono',monospace;color:var(--mt);letter-spacing:.08em;margin-left:2px}
+.tabs{display:flex;gap:3px;margin-left:auto}
+.tabs button{border:none;cursor:pointer;font:700 10.5px/1 'Poppins',sans-serif;padding:6px 14px;border-radius:99px;background:0;color:var(--mt);transition:.15s}
+.tabs button:hover{color:var(--bg)}
+.tabs button.on{background:var(--p);color:var(--ink)}
+
+/* PAGES */
+.pg{max-width:1440px;margin:0 auto;padding:28px 24px 80px;display:none}
+.pg.on{display:block}
+.st{font:900 30px/1.05 'Poppins',sans-serif;letter-spacing:-.04em}.st .hi{color:var(--p)}
+.ss{font:500 12.5px/1.6 'Inter',sans-serif;color:var(--mt);max-width:540px;margin:4px 0 24px}
+.rl{font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--l600);margin:28px 0 12px;display:flex;align-items:center;gap:8px}
+.rl::after{content:'';flex:1;height:1px;background:var(--bg2)}
+
+/* CARDS */
+.tr{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;padding-bottom:8px}
+.cw{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0}
+
+.cw .cl{font:500 8.5px/1.3 'JetBrains Mono',monospace;color:var(--mt);letter-spacing:.03em;text-align:center;max-width:220px}
+.cd{position:relative;overflow:hidden;border-radius:16px;box-shadow:0 2px 12px rgba(28,29,24,.08)}
+
+/* COMPONENTS */
+/* Logo mark only (no wordmark) — real UC glyph PNGs */
+.ucm{display:flex;justify-content:center}
+.ucm .m{width:34px;height:25px;font-size:0;background-repeat:no-repeat;background-position:center;background-size:contain}
+.ucm .m.lc{background-image:url('assets/uc-lime.png')}.ucm .m.ld{background-image:url('assets/uc-lime.png')}.ucm .m.ll{background-image:url('assets/uc-black.png')}
+
+.eye{font:500 7.5px/1 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.hd{font-family:'Poppins',sans-serif;font-weight:900;letter-spacing:-.04em;line-height:1.02}.hd .k{color:var(--p)}
+.bd{font-family:'Inter',sans-serif;font-weight:500;line-height:1.55}
+
+/* CTA pill — always usecreable.com */
+.cta{display:inline-flex;align-items:center;gap:4px;border-radius:99px;font:800 9px/1 'Poppins',sans-serif;letter-spacing:-.01em;white-space:nowrap;padding:5px 12px}
+.cta.dk{background:var(--ink);color:var(--p)}.cta.lm{background:var(--p);color:var(--ink)}.cta.wh{background:var(--sf);color:var(--ink)}
+
+/* Shapes — decorative */
+.sh{position:absolute;pointer-events:none}
+/* Swipe indicator */
+.sw{display:inline-flex;align-items:center;gap:3px}.sw .ln{width:24px;height:1.5px;background:currentColor;border-radius:1px}.sw .hh{width:0;height:0;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:6px solid currentColor}
+
+/* MOCK */
+.mk{border-radius:8px;overflow:hidden}
+.mk .tb{padding:4px 7px;display:flex;align-items:center;gap:3px}
+.mk .tb .dt{width:4.5px;height:4.5px;border-radius:50%}
+.mk .tb .ur{font:500 5.5px/1 'JetBrains Mono',monospace;color:var(--mt);margin-left:auto;letter-spacing:.04em}
+.mk .mc{padding:7px}
+.mk .sb{border-radius:5px;padding:4px 6px}
+.mk .sb .sl{font:500 5.5px/1 'Inter',sans-serif}.mk .sb .sv{font:900 1em/1 'Poppins',sans-serif}
+.mk .ri{display:flex;align-items:center;gap:4px;padding:2.5px 0}
+.mk .ri .av{width:18px;height:18px;border-radius:4.5px;display:grid;place-items:center;font:700 5.5px/1 'Inter',sans-serif;flex-shrink:0}
+.mk .ri .rn{font:600 6.5px/1 'Inter',sans-serif}.mk .ri .rd{font:400 5.5px/1 'Inter',sans-serif;color:var(--mt)}
+.mk .ri .ra{font:800 7.5px/1 'Poppins',sans-serif;color:var(--p);flex-shrink:0}
+
+/* Campaign card */
+.cp{border-radius:8px;padding:8px}
+.cp .ch{display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.cp .ci{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font:700 7px/1 'Inter',sans-serif}
+.cp .cn{font:700 8px/1 'Poppins',sans-serif;letter-spacing:-.01em}.cp .ct{font:500 6px/1 'Inter',sans-serif;color:var(--mt)}
+.cp .cm{display:flex;gap:4px;margin-top:5px}
+.cp .cx{flex:1;border-radius:4px;padding:3px 4px;text-align:center}.cp .cx .xl{font:500 5px/1 'Inter',sans-serif}.cp .cx .xv{font:800 7.5px/1 'Poppins',sans-serif}
+
+/* DS */
+.dg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-top:16px}
+.dc{background:var(--sf);border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(28,29,24,.05)}
+.dc h3{font:800 14px/1.1 'Poppins',sans-serif;color:var(--ink);letter-spacing:-.02em;margin-bottom:6px}
+.dc p{font:500 11px/1.55 'Inter',sans-serif;color:var(--mt)}
+.dc .tg{display:inline-block;font:500 8px/1 'JetBrains Mono',monospace;letter-spacing:.06em;padding:3px 7px;border-radius:4px;margin-top:8px}
+.dc .tg.do{background:var(--l50);color:var(--l700)}.dc .tg.dn{background:#fde8d0;color:#c2440a}
+.ru{background:var(--sf);border-radius:10px;padding:14px 16px;margin-top:10px;border-left:3px solid var(--p)}
+.ru h4{font:800 11px/1.1 'Poppins',sans-serif;color:var(--ink);margin-bottom:4px}
+.ru p{font:500 10px/1.5 'Inter',sans-serif;color:var(--mt)}
+.ru code{font:500 9px/1 'JetBrains Mono',monospace;background:var(--l50);color:var(--l700);padding:1px 4px;border-radius:3px}
+.cr{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.swr{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.swc{width:44px;height:44px;border-radius:8px;display:flex;align-items:flex-end;padding:3px}
+.swc span{font:500 6px/1 'JetBrains Mono',monospace}
+/* Badge with lime dots */
+.bg{position:relative;display:inline-block;background:var(--l100);border:1.5px solid var(--p);border-radius:8px;padding:3px 14px;font:800 11px/1 'Poppins',sans-serif;color:var(--ink);white-space:nowrap}
+.bg::before,.bg::after{content:'';position:absolute;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:var(--p)}
+.bg::before{left:-4px}.bg::after{right:-4px}
+.bg.bgd{background:rgba(143,192,26,.15);color:var(--l100)}
+.bg.bgd::before,.bg.bgd::after{background:var(--p)}
+/* Sidebar accent */
+.sb-bar{position:absolute;width:7px;border-radius:4px;background:var(--p);z-index:7}
+
+/* PHOTO DROP-ZONE PLACEHOLDER */
+.ph{position:absolute;border:1.5px dashed var(--yl);border-radius:10px;padding:9px 9px 9px 26px;overflow:hidden;background:rgba(251,191,36,.05)}
+.ph .pp{position:absolute;top:6px;left:6px;width:13px;height:13px;border-radius:50%;background:var(--yl);display:grid;place-items:center;font:900 11px/1 'Poppins',sans-serif;color:var(--ink)}
+.ph .pn{font:700 6px/1 'JetBrains Mono',monospace;color:var(--yl);letter-spacing:.1em;text-transform:uppercase;padding-top:2px}
+.ph .pds{font:italic 500 5.5px/1.5 'Inter',sans-serif;color:var(--yl);opacity:.85;margin-top:3px}
+.ph.pc{border-color:var(--ink);background:rgba(28,29,24,.025)}
+.ph.pc .pp{background:var(--p);color:var(--ink)}
+.ph.pc .pn{color:var(--ink)}
+.ph.pc .pds{color:var(--ink);opacity:.55}
+
+.og{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:18px}
+.ov{background:var(--sf);border-radius:12px;padding:16px}
+.ov .n{font:900 34px/1 'Poppins',sans-serif;color:var(--p)}.ov h3{font:800 13px/1.1 'Poppins',sans-serif;color:var(--ink);margin:3px 0}.ov p{font:500 10px/1.45 'Inter',sans-serif;color:var(--mt)}
+
+</style>
+</head>
+<body>
+<div class="top">
+<div class="lg">UC</div>
+<div><div class="tt">Social Template System</div></div>
+<span class="vr">V3.0 · 2026</span>
+<div class="tabs">
+<button class="on" onclick="tab(0)">Design System</button>
+<button onclick="tab(1)">Stories</button>
+<button onclick="tab(2)">Carousels</button>
+<button onclick="tab(3)">Static Posts</button>
+</div>
+</div>
+
+<!-- ═══ TAB 0 · DESIGN SYSTEM ═══ -->
+<div class="pg on" id="p0">
+<h2 class="st">The <span class="hi">component brain.</span></h2>
+<p class="ss">Atomic components and rules that power every social asset. Single source of truth — when you create a new post, start here.</p>
+
+<div class="og">
+<div class="ov"><div class="n">35+</div><h3>Templates</h3><p>Stories, carousels, static posts — two languages, one system.</p></div>
+<div class="ov"><div class="n">2</div><h3>Highlights</h3><p>For Brands · For Creators</p></div>
+<div class="ov"><div class="n">3</div><h3>Backgrounds</h3><p>Cream · Dark · Lime — each with its own rules.</p></div>
+<div class="ov"><div class="n">12</div><h3>Shapes</h3><p>Starburst · Blob · Circle · Pill · Sparkle · Flower · Squircle · Diamond · Star · Eye · Drop · Soft blob</p></div>
+</div>
+
+<!-- LOGO -->
+<div class="rl">01 · Logo — mark only</div>
+<div class="ru"><h4>Always mark only, top-center</h4><p>On social templates we use only the UC glyph mark — no wordmark. Position: top-center, <code>14–18px</code> from top edge (preview). Mark height: <code>~25px</code> preview / <code>115px</code> production. Three color variants, picked by background:<br><strong>On cream → lime mark</strong> · <strong>On dark → lime mark</strong> · <strong>On lime → black mark</strong>. White mark (<code>assets/uc-white.png</code>) reserved for photo / dark-image overlays.</p></div>
+<div class="cr" style="margin-top:10px">
+<div style="background:var(--bg);padding:14px 20px;border-radius:10px;text-align:center;border:1px solid var(--bg2)"><div class="ucm"><div class="m lc">UC</div></div><div style="font:500 7px/1 'JetBrains Mono',monospace;color:var(--mt);margin-top:5px">ON CREAM</div></div>
+<div style="background:var(--dbg);padding:14px 20px;border-radius:10px;text-align:center"><div class="ucm"><div class="m ld">UC</div></div><div style="font:500 7px/1 'JetBrains Mono',monospace;color:var(--mt);margin-top:5px">ON DARK</div></div>
+<div style="background:var(--p);padding:14px 20px;border-radius:10px;text-align:center"><div class="ucm"><div class="m ll">UC</div></div><div style="font:500 7px/1 'JetBrains Mono',monospace;color:var(--ink);opacity:.5;margin-top:5px">ON LIME</div></div>
+</div>
+
+<!-- CTA -->
+<div class="rl">02 · CTA — always usecreable.com</div>
+<div class="ru"><h4>CTA pill always says "usecreable.com" — except on stat slides</h4><p>Since buttons aren't clickable on social, all CTAs display the URL <code>usecreable.com</code>. Three pill variants:</p></div>
+<div class="cr" style="margin-top:10px">
+<div class="cta dk">usecreable.com</div>
+<div class="cta lm">usecreable.com</div>
+<div class="cta wh">usecreable.com</div>
+</div>
+<div class="ru" style="margin-top:10px"><p><strong>Pill vs eyebrow rule:</strong><br>
+• <strong>Pill (default)</strong> — use the <code>.cta</code> pill on cover slides, statement slides, screenshot slides, CTA-finale slides. Anything where the URL is the main action.<br>
+• <strong>Eyebrow (USECREABLE.COM in JetBrains Mono caps, 7–9pt, opacity 50–70%)</strong> — use ONLY when the slide already has a hero data point (big stat: 80%, 7.4M, 210+, $1,340) or a hero quote, and a full pill would compete with it. The eyebrow stays at the very bottom, small and discreet, so the number/quote remains the star.<br>
+• Never use both pill and eyebrow on the same slide.</p></div>
+
+<!-- BACKGROUNDS -->
+<div class="rl">03 · Backgrounds</div>
+<div class="dg">
+<div class="dc"><h3>Cream — default</h3><p>#f7f4ec · Most posts. Text ink. Keyword lime. For educational, tips, creator-facing content. Shapes: pastel, full-opacity paper-cutout from brand kit.</p><div style="width:100%;height:36px;background:var(--bg);border-radius:6px;margin-top:8px;border:1px solid var(--bg2)"></div></div>
+<div class="dc"><h3>Dark — brand-facing</h3><p>#000 · Text cream. Keyword lime. Distinctive shapes (flower, drop, sparkle, cone) with light blur (4–8px) and full-opacity vivid colors, bleeding off edges. Evernote-style depth: shape silhouette stays defined, only edges feather.</p><div style="width:100%;height:36px;background:var(--dbg);border-radius:6px;margin-top:8px"></div></div>
+<div class="dc"><h3>Lime — high energy / CTA</h3><p>#8fc01a · Text ink. Used sparingly: CTA slides, stat highlights. Max 1 lime-bg post per 5 in feed.</p><div style="width:100%;height:36px;background:var(--p);border-radius:6px;margin-top:8px"></div></div>
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="rl">04 · Typography hierarchy</div>
+<div class="ru"><h4>Five-level scale — readable at all sizes</h4><p>Preview cards in this document are scaled ~5.5× smaller than the 1080-px production canvas. Sizes below are given as <strong>preview px → production pt</strong> (×5.5 for carousel/post, ×6.17 for story).</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>1. Hero number (stat-only slides) — Poppins 900</h4><p>
+<code>50–52px → 275–290px production (≈140pt)</code><br>
+Tracking <code>-0.04em</code> · line-height <code>1.0</code>. Use for "$1,340" · "80%" · "7.4M" · "210+". One per slide. Color: <strong>lime</strong> on cream/dark, <strong>ink</strong> on lime.
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>2. Headline (display) — Poppins 900</h4><p>
+Cover: <code>23–25px → ~140pt</code><br>
+Stories: <code>17–21px → ~120pt</code><br>
+Carousels / Posts (internal): <code>14–17px → ~95pt</code><br>
+Tracking <code>-0.04em</code> · line-height <code>1.05–1.15</code>. Always exactly one keyword wrapped in <code>&lt;span class="k"&gt;</code> (lime). <strong>Min production size: 48pt.</strong>
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>3. Subhead (supporting line) — Poppins 700</h4><p>
+<code>11–13px → ~65pt</code><br>
+Tracking <code>-0.01em</code> · line-height <code>1.2</code>. Use directly under the hero number ("earned last month") or as a single-line supporting clause under the headline. <strong>Min production size: 32pt.</strong>
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>4. Body (paragraph) — Inter 500</h4><p>
+<code>9–10px → ~55pt</code><br>
+Line-height <code>1.45</code>. Used for explanatory copy, tips descriptions, captions. Max 2 lines on covers, 4 lines on internal slides. <strong>Min production size: 26pt — never smaller.</strong>
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>5. Eyebrow & meta — JetBrains Mono 500</h4><p>
+<code>7–8px → ~44pt</code><br>
+<code>letter-spacing: 0.1em</code> · ALL CAPS. The ONLY eyebrow text printed on a live card is the URL-as-CTA (<code>USECREABLE.COM</code>) on stat/quote slides, or <code>SWIPE →</code> on covers. Section/topic labels (<code>FOR BRANDS</code>, <code>THE PROBLEM</code>…) are internal classification only — never printed (§11.5). <strong>Min production size: 22pt.</strong>
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>Character budgets</h4><p>
+<strong>Cover headline:</strong> max 40 chars · <strong>Internal slide:</strong> max 60 chars · <strong>Story:</strong> max 35 chars · <strong>Static post:</strong> max 50 chars · <strong>Body paragraph:</strong> max 140 chars (≈ 2 short lines on cards, 4 lines on production)
+</p></div>
+
+<!-- MARGINS -->
+<div class="rl">05 · Margins & safe zones (per format)</div>
+<div class="ru"><h4>Universal rules</h4><p>
+Every format has its own safe zone because Instagram's UI overlays different chrome on each. Anything <em>critical</em> (logo · headline · body · CTA · key data) MUST live inside the safe zone. <em>Decorative shapes</em> can bleed outside.<br>
+<strong>Composition rule:</strong> always center the critical block vertically + horizontally within the safe zone. Edge-aligned (left or right) only on Carousel Educational slides.<br>
+<strong>Logo:</strong> always top-center, mark only (<code>.ucm</code>).
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>1. Reels — 1080 × 1920 (9:16)</h4><p>
+The most aggressive overlay. Instagram chrome covers:<br>
+&nbsp;&nbsp;<strong>Top:</strong> ~250px (≈14%) — app quick actions<br>
+&nbsp;&nbsp;<strong>Bottom:</strong> 350–450px — caption + audio title<br>
+&nbsp;&nbsp;<strong>Right:</strong> vertical strip — like / comment / share buttons<br>
+<strong>Safe zone:</strong> top 250px · bottom 450px · right 220px · left 60px<br>
+<strong>Critical block:</strong> center column 760px wide, vertically centered between safe boundaries. Everything text-related stays in this column.<br>
+<strong>Logo top:</strong> 290px from canvas top (just below the top overlay).<br>
+<strong>CTA bottom:</strong> 470px from canvas bottom (just above the caption overlay).
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>2. Stories — 1080 × 1920 (9:16)</h4><p>
+Less aggressive than Reels but still trimmed top + bottom:<br>
+&nbsp;&nbsp;<strong>Top:</strong> ~250px — progress bar + account name + close button<br>
+&nbsp;&nbsp;<strong>Bottom:</strong> ~250px — reply field + "Send message" CTA<br>
+<strong>Safe zone:</strong> 250px top + bottom · 60px left + right<br>
+<strong>Critical block:</strong> centered horizontally + vertically inside the safe zone.<br>
+<strong>Logo top:</strong> 280px from canvas top.<br>
+<strong>CTA bottom:</strong> 280px from canvas bottom.
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>3. Feed posts — Carousel 1080 × 1350 (4:5) · Static 1080 × 1080 (1:1) · Grid 1080 × 1440 (3:4)</h4><p>
+Caption renders below the asset — minimal overlay. The risk is grid-thumbnail cropping in profile view.<br>
+&nbsp;&nbsp;<strong>Carousel 4:5:</strong> safe margin <code>10%</code> from each edge (108px) → logo, headline, CTA all live inside the inner 864×1080 area.<br>
+&nbsp;&nbsp;<strong>Static 1:1:</strong> safe margin <code>8%</code> (86px) → inner 908×908.<br>
+&nbsp;&nbsp;<strong>3:4 (grid preview):</strong> the top/bottom 12% of a 4:5 post gets cropped in the grid — never place critical content there if it'll appear in a profile grid.<br>
+<strong>Logo top:</strong> 8% from canvas top (≈86–108px).<br>
+<strong>CTA bottom:</strong> 8% from canvas bottom.<br>
+<strong>Educational (left-aligned):</strong> text-left from <code>14%</code> from left edge, text-right margin <code>12%</code>.
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>Internal spacing (all formats, applied within safe zone)</h4><p>
+<strong>Headline ↔ logo:</strong> ≥ 16px gap<br>
+<strong>Body ↔ headline:</strong> 6–10px gap<br>
+<strong>CTA pill ↔ bottom of safe zone:</strong> 16–24px<br>
+<strong>Eyebrow USECREABLE.COM ↔ bottom of safe zone:</strong> 10–14px (smaller because eyebrow is itself a CTA-replacement)<br>
+<strong>Screenshot ↔ headline:</strong> 12–16px · screenshot stays within safe zone, never bleeds<br>
+<strong>Shapes:</strong> may extend off-canvas; visible silhouette stays at least 40px from the headline bounding box (§06.1 §7).
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>Preview cards in this document</h4><p>
+The mobile preview cards on the right (175×311 for Stories, 196×245 for Carousels, 215×215 for Posts) are <em>scaled-down proofs</em>. The proportions, alignment, and relative spacing match the 1080-px production canvas. To convert: multiply preview px × 6.17 (Stories), × 5.51 (Carousels), × 5.02 (Posts).
+</p></div>
+
+<!-- SHAPES -->
+<div class="rl">06 · Paper-cutout shapes (full set from brand kit)</div>
+<div class="ru"><h4>12 shapes — pastel for Creators, blur for Brands</h4><p>
+<strong>Creator content (cream bg):</strong> Use all 12 shapes in pastel colors — yellow, lavender, pink-soft, orange, lime-light. Opacity <code>45–80%</code>. Full color, no blur. 2–3 per template at edges.<br>
+<strong>Brand content (dark bg):</strong> Use the 12 brand shapes with <code>filter: blur(4–8px)</code> at full opacity, vivid brand colors (lime, lavender, yellow, orange, magenta). Position at edges, bleeding off the card. Evernote-style: defined silhouette, feathered edge. 2–3 shapes per card.<br>
+<strong>Shapes:</strong> Starburst, Amoeba blob, Solid circle, Capsule pill, Sparkle, Flower, Soft blob, Squircle, Diamond, Star, Eye, Drop
+</p></div>
+
+<!-- SHAPE × TEXT CONTRAST -->
+<div class="rl">06.1 · Shape × Text — contrast & legibility rules</div>
+<div class="ru"><h4>The text must always win. Shapes serve the composition, never compete with it.</h4><p>
+<strong>1. Never overlap headline or body text.</strong> Shapes live at corners or edges with negative offsets, bleeding off-canvas. The visible portion stays in the outer ~30% of the card. <strong>CTA pill and logo mark are an exception</strong> — they have their own background/border and can have shapes near or behind them without losing legibility.<br>
+<strong>2. Z-index hierarchy is non-negotiable.</strong> Text + logo + CTA = <code>z-index: 10</code>. Shapes = <code>z-index: 0–5</code>. Never the other way.<br>
+<strong>3. Color collision is forbidden.</strong> A shape may NEVER share its color with a text element close to it.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;✗ <code>lime keyword</code> + lime shape adjacent → unreadable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;✗ yellow stat on lime bg with yellow shape behind it → unreadable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;✓ <code>lime keyword</code> on dark + lavender / yellow / magenta / orange shapes near text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;✓ yellow stat on lime + ink / lavender / pink shapes near text<br>
+<strong>4. Safe palettes per background:</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<u>Dark bg + lime keyword:</u> shapes adjacent to text = lavender, yellow, orange, magenta. Lime allowed only as small accent at the farthest corner.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<u>Cream bg + lime keyword:</u> shapes near text = yellow, lavender, magenta, pink-soft, orange. Lime allowed only diluted (lime-100/200) or far corner.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<u>Lime bg + ink text:</u> shapes near text = yellow, magenta, ink-tint. No lime variations near text.<br>
+<strong>5. Blur is a separator.</strong> Heavier blur (<code>6–8px</code>) on big shapes pushes them visually back. Sharper edges (<code>2–4px</code>) only on small accent shapes that are FAR from text.<br>
+<strong>6. Squint test.</strong> Squint at the card. If a shape's color blurs into a text element of the same hue, change the shape color or move it further. Text legibility ALWAYS wins.<br>
+<strong>7. Headline safe zone.</strong> No shape may have its visible silhouette within <code>40px</code> of the headline's bounding box.<br>
+<strong>8. Numeric shape no-go zones — measured in pixels of the production canvas.</strong> Any visible shape pixel (including the soft edge of a halo / blur) MUST fall outside the rectangle below. Hard rule, not interpretable.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<u>Stories</u> (1080 × 1920) — no-go = <code>x: 60–1020, y: 400–1520</code> (text + CTA column)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<u>Carousels</u> (1080 × 1350) — no-go = <code>x: 60–1020, y: 300–950</code> (text block) + <code>y: 1080–1220</code> only when CTA pill present (skip if eyebrow only — eyebrow doesn't need protection)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<u>Static Posts</u> (1080 × 1080) — no-go = <code>x: 60–1020, y: 200–850</code> (text block) + <code>y: 920–1040</code> when CTA pill present<br>
+<strong>How to check:</strong> draw a bounding box around every shape (including its blurred halo / glow). The bounding box must NOT intersect the no-go rectangle. If it does, shrink the shape or move it further off-canvas. Logo and CTA pill backgrounds protect their own area — shapes may pass behind them.
+</p></div>
+
+<!-- BRAND LANGUAGE -->
+<div class="rl">07 · FOR BRANDS — design language</div>
+<div class="ru"><h4>Outcome-driven · dark · crisp shapes + glow halo</h4><p>
+<strong>Background:</strong> <code>#000</code> (dark). Lime allowed only as keyword in headlines.<br>
+<strong>Logo:</strong> mark variant <code>.m.ld</code> (white on dark).<br>
+<strong>Eyebrow:</strong> <code>FOR BRANDS</code> is an internal label only — NOT printed on the card (see §11.5). Lead with the headline.<br>
+<strong>Tone:</strong> Outcome-driven, B2B, confident, scale-focused. Speak to decision-makers and marketers. Lead with numbers, results, and infrastructure.<br>
+<strong>Copy examples:</strong> "Your content, in every feed." · "80% less production time." · "312 creators. 7.4M views." · "Scale your content. Today." · "One brief. Hundreds of feeds."<br>
+<strong>Use case:</strong> Brand statements, stat reveals, social proof to marketers, feature announcements, CTA finale on dark backgrounds.
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>Brand shape system — crisp + glow halo (Evernote-style)</h4><p>
+Three shape treatments combine on a single card. Use 2–3 per card.<br><br>
+<strong>A. Crisp shape + glow halo</strong> (the dominant treatment) — sharp silhouette in saturated neon color, no blur, partially cut by the frame edge. Behind it: a larger copy of the same shape, same color, with <code>filter: blur(70–80px)</code> at production scale (~13–15px at preview scale), opacity <code>0.7–0.85</code>, offset slightly so the glow extends asymmetrically into the dark. Creates the "colored neon object with halo" effect from Evernote.<br>
+<strong>B. Light-blur shape</strong> (the supporting treatment) — the original 12 brand shapes (flower, drop, eye, diamond, star, sparkle, capsule, squircle, soft blob, amoeba blob, solid circle, cone) with <code>filter: blur(4–8px)</code> at preview / <code>22–44px</code> at production. Full opacity, vivid colors. Silhouette stays clearly readable. Use for accents in corners far from the main crisp shape.<br>
+<strong>C. Full-blur atmospheric blob</strong> (rare, max 1 per card) — a single shape with <code>filter: blur(50–80px)</code> at preview / <code>140px+</code> at production. The silhouette dissolves into a pure colored glow. Use only for background atmosphere in negative space far from the focal point. Never as the main brand element.<br><br>
+<strong>Colors</strong> — neon palette only: lime (<code>#a4d435</code>, <code>#cdf03c</code>), yellow (<code>#FBBF24</code>), lavender (<code>#A78BFA</code>), orange (<code>#F97316</code>), magenta (<code>#EC4899</code>).<br>
+<strong>Asymmetric glow</strong> — offset the halo so MORE of the glow falls AWAY from the frame edge and INTO the dark composition (where there's room), and LESS falls outside the frame. The glow is doing the visual work; it should be visible.<br>
+<strong>Combining treatments</strong> — typical card: 1× crisp+halo (the hero shape, dominant corner) + 1× light-blur (smaller accent in opposite corner) + optionally 1× full-blur atmosphere (background mass behind the hero).
+</p></div>
+
+<!-- CREATOR LANGUAGE -->
+<div class="rl">08 · FOR CREATORS — design language</div>
+<div class="ru"><h4>Aspirational · cream + lime · pastel paper-cutout</h4><p>
+<strong>Background:</strong> Cream <code>#f7f4ec</code> as default. Lime <code>#8fc01a</code> for high-energy CTA or stat slides (max 1 lime per 5).<br>
+<strong>Logo:</strong> mark variant <code>.m.lc</code> on cream, <code>.m.ll</code> on lime.<br>
+<strong>Shapes:</strong> 12 brand shapes in pastel tones — yellow, lavender, pink-soft, orange, lime-light. Opacity <code>45–80%</code>. Full color, NO blur. Paper-cutout feel. 2–3 shapes per card.<br>
+<strong>Eyebrow:</strong> <code>FOR CREATORS</code> is an internal label only — NOT printed on the card (see §11.5). Lead with the headline.<br>
+<strong>Tone:</strong> Aspirational, peer-to-peer, warm, accessible. Speak to individual creators. Lead with possibility, money, ease.<br>
+<strong>Copy examples:</strong> "No face. No followers. No problem." · "$1,340 earned last month." · "Turn AI into a real income." · "Start earning. This week." · "Pick a brief, create with AI tools."<br>
+<strong>Use case:</strong> Creator statements, money-earned stats, peer quotes, feature walkthroughs, CTA finale on cream/lime backgrounds.
+</p></div>
+
+<!-- SCREENSHOT RULES -->
+<div class="rl">09 · Screenshot variants</div>
+<div class="ru"><h4>Two variants based on text length</h4><p>
+<strong>Short text (≤ 80 chars):</strong> Screenshot takes <code>70%</code> of card height. Text small underneath.<br>
+<strong>Long text (> 80 chars):</strong> Screenshot takes <code>40%</code> of card height. Text occupies more space above.<br>
+Mock browser chrome with 3 dots + URL always present. Slight rotation (1–2°). Light variant on cream, dark variant on dark bg.
+</p></div>
+
+<!-- ALIGNMENT -->
+<div class="rl">10 · Alignment</div>
+<div class="ru"><h4>Centered by default — left-aligned ONLY for educational</h4><p>
+<strong>Default = centered.</strong> Logo top-center; headline, sub-head and body all centered horizontally. This applies to: covers, statements, stat slides, quotes, feature slides, CTA finales, and every Story and Static Post.<br>
+<strong>Exception = educational.</strong> ONLY genuinely educational slides — numbered tips lists and multi-paragraph teaching content (the C3 type) — use left-aligned text. Logo stays top-center even then.<br>
+<strong>Rule of thumb:</strong> if it's not a tips list or a multi-paragraph how-to, center it.
+</p></div>
+
+<!-- LANGUAGE -->
+<div class="rl">11 · Language</div>
+<div class="ru"><h4>Bilingual: EN + IT</h4><p>Same templates, same layout — only copy changes. Maintain character limits across languages.</p></div>
+
+<!-- EYEBROWS -->
+<div class="rl">11.5 · Eyebrows — what may be printed on a card</div>
+<div class="ru"><h4>No topic / section labels on published posts</h4><p>
+<strong>Never print section or topic eyebrows</strong> like <code>THE PROBLEM</code>, <code>THE SHIFT</code>, <code>THE VALUE</code>, <code>USE CASES</code>, <code>FOR BRANDS</code>, <code>FOR CREATORS</code> on a finished post. They are <em>internal classification only</em> (used to organize this library and to tell the designer which language to apply) — they add clutter and never ship on the artwork.<br>
+<strong>The only eyebrow text allowed on a live card:</strong><br>
+&nbsp;&nbsp;• <code>USECREABLE.COM</code> — on stat / quote slides, in place of a CTA pill (§02).<br>
+&nbsp;&nbsp;• <code>SWIPE →</code> — on carousel cover slides only.<br>
+Everything else leads with the headline. No kicker, no category tag.
+</p></div>
+
+<!-- DETERMINISTIC PRODUCTION RULES -->
+<div class="rl">12 · Archetype decision tree (deterministic)</div>
+<div class="ru"><h4>Given input → exactly one template archetype</h4><p>
+Apply rules <strong>in order</strong>. The first that matches wins.<br>
+<strong>1.</strong> Input contains a hero number (≥4 chars, e.g. "80%", "$1,340", "7.4M", "312") AND nothing else dominant → <strong>Stat</strong><br>
+<strong>2.</strong> Input is a quote with attribution ("— Maya, AI creator") OR cites a real person's result → <strong>Social proof / Quote</strong><br>
+<strong>3.</strong> Input is a CTA verb ("Start", "Scale", "Get", "Upload") + outcome promise, last slide of sequence → <strong>CTA finale</strong><br>
+<strong>4.</strong> Input mentions a product feature/screen ("dashboard", "briefs view", "earnings", "campaign") AND has a screenshot/data asset → <strong>Feature + screenshot</strong> (or <strong>Dashboard</strong> if the screenshot IS the hero)<br>
+<strong>5.</strong> Input is a numbered list, tips, "5 ways to...", "how to..." → <strong>Educational — Tips list</strong><br>
+<strong>6.</strong> Input is multi-paragraph teaching content ("Brands post briefs. You create...") → <strong>Educational — Text</strong><br>
+<strong>7.</strong> Input is the first slide of a sequence / opens a topic → <strong>Cover</strong><br>
+<strong>8.</strong> Default → <strong>Statement</strong>
+</p></div>
+<div class="ru" style="margin-top:8px"><h4>Format selection</h4><p>
+Caller specifies one of <code>Story</code> / <code>Carousel</code> / <code>Static Post</code> and the audience (<code>Brand</code> / <code>Creator</code>). Combined with the archetype above, this picks ONE template card from the matrix. No ambiguity.
+</p></div>
+
+<!-- RESPONSIVE COVER TYPE -->
+<div class="rl">12.5 · Responsive cover typography</div>
+<div class="ru"><h4>Short cover copy → bigger type, never filler</h4><p>
+When a carousel cover has little copy it must NOT look empty. Fill the canvas with <strong>typographic scale</strong>, never with extra cards, mockups, UI, avatars, feeds or decorative filler. Count headline + body characters (spaces included), then pick a layout band. Keep logo top-center, headline dominant, body under it, CTA pill bottom-center, 2–3 shapes at the edges, one lime keyword, text inside safe area.<br><br>
+<strong>≤ 110 chars — "large cover":</strong> headline +15–25% over standard (production ~165–185pt), body +15–25% (~62–72pt), headline line-height 0.95–1.02, body 1.25–1.35. The text block carries the slide.<br>
+<strong>111–160 chars — "standard":</strong> headline ~135–155pt, body ~52–60pt, headline line-height 1.05–1.12, body 1.35–1.45.<br>
+<strong>161–210 chars — "compact":</strong> headline ~110–130pt, body ~44–52pt, headline line-height 1.08–1.15, body 1.4–1.5.<br>
+<strong>&gt; 210 chars:</strong> do NOT shrink below system minimums (§17) — shorten the copy, split into more slides, or change archetype.<br>
+<strong>Fill the void only with:</strong> larger headline scale, larger body scale, tighter line-height, a more dominant text block, and a small vertical re-centering of the block. Nothing else.
+</p></div>
+
+<!-- TEXT VS VISUAL -->
+<div class="rl">12.6 · Text always outweighs the visual</div>
+<div class="ru"><h4>When a slide pairs copy with a supporting visual</h4><p>
+On any slide that has BOTH text and a visual element (a diagram, a "1 → many" graphic, a small mock, an illustrative grid — anything that isn't the headline/body/CTA), the <strong>text is the protagonist</strong> and the visual is only support. Target weight ≈ <strong>70% text / 30% visual</strong>.<br><br>
+<strong>Order of work:</strong> 1) strengthen the copy first; 2) then set the typographic scale (headline dominant, body clear); 3) only at the end size/position the visual; 4) if the slide still feels empty, do NOT add more graphics — adjust text size, rhythm and vertical position instead.<br>
+<strong>The visual must:</strong> sit below / secondary to the text block, be scaled down so it never competes with the headline, stay centered, keep its labels small and quiet, and never grow into a dashboard/feed/mockup. It illustrates the concept — it doesn't carry the slide.<br>
+<strong>Reading test:</strong> the message must be readable from the text alone in 2–3 seconds; the visual just reinforces it.
+</p></div>
+
+<!-- SCREENSHOT VARIANT RULE -->
+<div class="rl">13 · Screenshot variant selector</div>
+<div class="ru"><h4>Char count → variant</h4><p>
+Count all non-screenshot text on the slide (headline + body, exclude logo + eyebrow + CTA).<br>
+<strong>≤ 80 characters total</strong> → Screenshot variant A: screenshot 70% of card, headline below screenshot, short.<br>
+<strong>&gt; 80 characters total</strong> → Screenshot variant B: screenshot 40% of card, headline + body above screenshot.<br>
+Threshold is hard. Round up. If exactly 80 → variant A.
+</p></div>
+
+<!-- SHAPE COMBOS LIBRARY -->
+<div class="rl">14 · Shape combos library (pre-approved)</div>
+<div class="ru"><h4>Use one combo per card — pick by audience + bg, rotate for variety</h4><p>
+Combos are deterministic: same archetype + audience always has the same 4–6 combos available. Pick by card index (modulo).<br><br>
+<strong>BRAND combos (dark bg, crisp + glow halo + occasional full-blur atmosphere, see §07):</strong><br>
+<code>B1</code> Crisp lime 4-point star BR (with lime blur-80px halo) + crisp yellow J-arc BL (with yellow blur-70px halo) + lavender flower TL (light blur 28px, silhouette readable)<br>
+<code>B2</code> Crisp yellow diamond BR (with yellow halo) + crisp lavender cone B-center (with lavender halo) + small lime sparkle TL (light blur)<br>
+<code>B3</code> Crisp lime star TR (with halo) + magenta drop BL (light blur, silhouette readable) — only when keyword is NOT lime<br>
+<code>B4</code> Crisp lime sparkle BR + yellow flower TL (light blur 22–44px) + atmospheric lavender full-blur blob BL (irriconoscibile, opacity .7)<br>
+<code>B5</code> Crisp yellow eye TR (with yellow halo) + crisp lime arc BL (with halo) — minimal, two crisp+halo only<br>
+<strong>Color collision rule:</strong> if headline keyword color = X, NO shape near text uses X. See 06.1 §3.<br>
+<strong>CREATOR combos (cream bg, opacity 45–80%, pastel, NO blur):</strong><br>
+<code>C1</code> Yellow starburst TL (72×68) + lavender solid-circle BR (68×68) + pink-soft capsule mid-R + magenta diamond mid-L<br>
+<code>C2</code> Yellow flower TR (60×60) + orange drop BL (44×55) + magenta sparkle mid-L (24×24)<br>
+<code>C3</code> Magenta diamond TL (56×52) + yellow drop BR (48×60)<br>
+<code>C4</code> Lavender flower TR (60×60) + orange drop BL + magenta diamond mid<br>
+<code>C5</code> Yellow eye TL (48×32) + lavender soft-blob BR (60×55)<br><br>
+<strong>LIME combos (lime bg, ink-tint + complementary):</strong><br>
+<code>L1</code> Yellow starburst TR + ink solid-circle BL (6% opacity, very subtle) + magenta dot mid-R<br>
+<code>L2</code> Yellow flower TR + ink soft-blob BL (6% opacity) + magenta squircle BR
+</p></div>
+
+<!-- KEYWORD RULES -->
+<div class="rl">15 · Headline keyword & line-break rules</div>
+<div class="ru"><h4>Exactly one keyword per headline, deterministic placement</h4><p>
+<strong>Length:</strong> 1–3 words consecutive, wrapped in <code>&lt;span class="k"&gt;</code>.<br>
+<strong>Position:</strong> ALWAYS the last meaningful phrase of the last sentence — usually the punchline noun or outcome.<br>
+<strong>Color rule:</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Cream bg → keyword = lime <code>#8fc01a</code><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dark bg → keyword = lime <code>#a4d435</code> (slightly brighter)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Lime bg → keyword = ink (rare) OR no keyword<br>
+<strong>Examples:</strong> "Your content, in <em>every feed</em>." · "She made <em>$1,340</em> last month..." · "Start earning. <em>This week</em>." · "5 ways to earn <em>more</em>."<br>
+<strong>Line break:</strong> only with explicit <code>&lt;br&gt;</code> between two clauses ("80%<br>less production time"). Never let the keyword span a line break.
+</p></div>
+
+<!-- WORD BUDGETS -->
+<div class="rl">16 · Word budgets per archetype × format</div>
+<div class="ru"><h4>Hard caps — if exceeded, apply §17 overflow protocol</h4><p>
+Budgets count every word in the critical block (headline + subhead + body). Hero numbers and the CTA pill / eyebrow URL are excluded — they're fixed. <em>"H"</em> = headline words, <em>"S"</em> = subhead words, <em>"B"</em> = body words.<br><br>
+
+<strong>Statement</strong> — Stories 8–10 H · Carousels 8–10 H · Posts 9–12 H<br>
+<strong>Stat</strong> — number + 4 S + 6 B (same all formats)<br>
+<strong>Quote / Social proof</strong> — Stories 4 attribution + 14 H + 6 B = 24 max · Carousels 24 · Posts 28<br>
+<strong>Cover</strong> — 6–8 H + SWIPE eyebrow (Carousels only; Stories + Posts don't use Cover)<br>
+<strong>Educational text</strong> — Carousels: 5 H + 30 B = 35 max · NOT used in Stories or Static Posts<br>
+<strong>Tips list</strong> — Carousels: 5 H + 5 items × 8 B = 45 max · NOT used in Stories or Static Posts<br>
+<strong>Feature + screenshot ≤80</strong> — 6–8 H, no body, screenshot 70% (all formats)<br>
+<strong>Feature + screenshot &gt;80</strong> — 6 H + 20 B = 26 max, screenshot 40% (all formats)<br>
+<strong>CTA finale</strong> — 5 H + 6 B = 11 max (all formats)<br>
+<strong>Dashboard</strong> — screenshot + 8 B caption · Static Posts only
+</p></div>
+
+<!-- OVERFLOW PROTOCOL -->
+<div class="rl">17 · Overflow protocol</div>
+<div class="ru"><h4>If the copy exceeds the budget — apply steps in order, never skip</h4><p>
+<strong>Step A · Tighten copy.</strong> Strip adverbs, articles, "really" / "actually". Active verbs. One sentence instead of two. If it fits → done.<br>
+<strong>Step B · Split into 2 slides.</strong> Only if Tighten doesn't bring it under budget.<br>
+&nbsp;&nbsp;<strong>Stories</strong> → 2 consecutive stories. No "1/2 2/2" indicator (clean).<br>
+&nbsp;&nbsp;<strong>Carousels</strong> → add one extra slide between cover and CTA.<br>
+&nbsp;&nbsp;<strong>Static Posts</strong> → convert to a 2-slide carousel (never accept overflow on a single post).<br>
+<strong>Step C · Change archetype.</strong> If even split doesn't fit (e.g. 200-char quote in a Quote slide), force a switch to <em>Educational text</em> (Carousel) or move the long-form to a blog post and use a cover-link card on social.<br><br>
+<strong>Minimum font sizes — never go below.</strong> If the copy still doesn't fit at the minimums below, you MUST go to Step B, not shrink further:<br>
+&nbsp;&nbsp;Headline ≥ <code>48pt</code> · Subhead ≥ <code>32pt</code> · Body ≥ <code>26pt</code> · Eyebrow ≥ <code>22pt</code> (production scale, 1080-px canvas)
+</p></div>
+
+<!-- COMPONENT ANATOMIES -->
+<div class="rl">18.5 · Component anatomies (reusable schemas)</div>
+<div class="ru"><h4>Stat slide — fixed stack</h4><p>
+Always uses this 4-layer stack, in this exact order:<br>
+<strong>1. Hero number</strong> — Poppins 900, lime (cream / dark bg) or ink (lime bg). Production: 275–320pt. Preview: 48–52px. Single line.<br>
+<strong>2. Subhead</strong> — Poppins 700, ink (cream / lime bg) or cream (dark bg). Production: 76pt. Preview: 13–14.5px. One short line describing the number ("views in 30 days", "earned last month", "creators already earning").<br>
+<strong>3. Caption</strong> (optional) — Inter 500, mt color, opacity .55–.85. Production: 44pt. Preview: 9.5px. One short qualifier line ("across 312 creators · one brief", "— a real creator on Usecreable"). Omit if hero + subhead are self-sufficient.<br>
+<strong>4. Eyebrow URL</strong> — JetBrains Mono 500, mt color, opacity .6. Production: 44pt. Preview: 7px. Always "USECREABLE.COM" all caps. Never replace with pill CTA on stat slides (§02 rule).<br>
+Stack centered vertically + horizontally. No CTA pill. No bullet, no icon, no extra accent text.
+</p></div>
+
+<div class="ru" style="margin-top:8px"><h4>Tips list (5-item) — bullet + row anatomy</h4><p>
+Left-aligned column of 5 numbered rows. Always exactly 5 (never 4, never 6). Anatomy per row:<br>
+<strong>Bullet box</strong> — 16×16px (preview) / 88×88px (production), background lime, border-radius 4px (preview) / 22px (production). Contains the row number.<br>
+<strong>Bullet number</strong> — Poppins 800, ink color. Preview: 9px. Production: 50pt. Centered in box.<br>
+<strong>Row text</strong> — Inter 500, ink (cream bg) or mt (dark bg), opacity .75. Preview: 9.5px. Production: 52pt. Vertically center-aligned with the bullet.<br>
+<strong>Bullet-to-text gap</strong> — 5px (preview) / 28px (production).<br>
+<strong>Row-to-row gap</strong> — 4px (preview) / 30px (production). Tight on purpose: 5 rows must fit alongside a headline at the top.<br>
+<strong>Headline above list</strong> — 1 line max, ends with a 1-word lime keyword ("5 ways to earn <em>more</em>." / "5 steps to ship a <em>brief</em>."). Gap to first row: 9px preview / 50px production.
+</p></div>
+
+<!-- LIME VARIANT RULE -->
+<div class="rl">18 · Lime variant — when allowed</div>
+<div class="rl">18 · Lime variant — when allowed</div>
+<div class="ru"><h4>Lime bg is the exception, not a default</h4><p>
+<strong>Allowed for Creator only.</strong> Brand never uses lime as background.<br>
+<strong>Use cases:</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;1. CTA finale on a carousel (last slide)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2. Stat reveal where the number is a celebration ("$1,340 earned", "210+ creators")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3. Hero cover of a Highlight category (For Creators)<br>
+<strong>Frequency cap:</strong> max 1 lime-bg per 5 slides in any feed/sequence.<br>
+<strong>Logo:</strong> <code>.m.ll</code>. CTA pill: <code>.cta.dk</code>. Text: ink. Keyword stays ink (no lime-on-lime).
+</p></div>
+
+<!-- PRODUCTION CHECKLIST -->
+<div class="rl">19 · Production checklist (apply in order)</div>
+<div class="ru"><h4>Run before any card is finalized</h4><p>
+<strong>1.</strong> Format + audience + archetype received from caller → pick template cell from matrix.<br>
+<strong>2.</strong> Count chars (headline + body) → pick screenshot variant if applicable (§13).<br>
+<strong>3.</strong> Count words in the critical block — if over the budget for that archetype × format (§16), apply overflow protocol §19 BEFORE laying out.<br>
+<strong>4.</strong> Identify keyword (last phrase, 1–3 words) → wrap in <code>&lt;span class="k"&gt;</code> (§15).<br>
+<strong>5.</strong> Pick shape combo by card index mod combo-count for the audience + bg (§14). Verify color collision (§06.1).<br>
+<strong>6.</strong> Place logo, headline, body, screenshot/CTA per §05 spacing.<br>
+<strong>7.</strong> CTA: pill by default; eyebrow USECREABLE.COM if hero number/quote present (§02).<br>
+<strong>8.</strong> Run shape×text squint test (§06.1 §6) — if collision, swap shape color from the safe palette (§06.1 §4).<br>
+<strong>9.</strong> Verify font min sizes (Headline 48pt · Subhead 32pt · Body 26pt · Eyebrow 22pt) — if anything is below min, apply §17 split.<br>
+<strong>10.</strong> Lime variant? Only for Creator + use cases in §18. Never Brand.<br>
+<strong>11.</strong> Done. Card is unambiguous.
+</p></div>
+
+</div>
+
+<!-- ═══ TAB 1 · STORIES ═══ -->
+<div class="pg" id="p1">
+<h2 class="st">Stories + <span class="hi">Highlights</span></h2>
+<p class="ss">1080 × 1920 · 9:16 — Mark only top-center. Everything center-aligned. CTA = usecreable.com. Creators get pastel shapes; Brands get blur depth.</p>
+
+<!-- HIGHLIGHT COVERS -->
+<div class="rl">Highlight covers (2 categories)</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:82px;height:82px;background:var(--ink);border-radius:50%;display:grid;place-items:center;border:2.5px solid var(--p)"><div style="text-align:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" fill="var(--p)" opacity=".25" stroke="var(--p)" stroke-width="1.5"/><path d="M8 12h8M8 15h5" stroke="var(--p)" stroke-width="1.2" stroke-linecap="round"/></svg><div style="font:700 5.5px/1 'JetBrains Mono',monospace;color:var(--p);letter-spacing:.06em;margin-top:2px">FOR BRANDS</div></div></div><span class="cl">For Brands</span></div>
+<div class="cw"><div class="cd" style="width:82px;height:82px;background:var(--ink);border-radius:50%;display:grid;place-items:center;border:2.5px solid var(--p)"><div style="text-align:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" fill="var(--p)" opacity=".25" stroke="var(--p)" stroke-width="1.5"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" stroke="var(--p)" stroke-width="1.5" stroke-linecap="round"/></svg><div style="font:700 5.5px/1 'JetBrains Mono',monospace;color:var(--p);letter-spacing:.06em;margin-top:2px">FOR CREATORS</div></div></div><span class="cl">For Creators</span></div>
+</div>
+
+<!-- FOR BRANDS — dark + blur depth -->
+<div class="rl">For Brands — dark, blur depth, outcomes-first</div>
+<div class="tr">
+<!-- SB1 statement -->
+<div class="cw"><div class="cd" style="width:175px;height:311px;background:var(--dbg)">
+<!-- Brand shapes: yellow flower TR + magenta drop BL + lavender sparkle (lime keyword "every feed." stays clear) -->
+<svg class="sh" style="top:-100px;right:-70px;width:155px;height:155px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-70px;left:-55px;width:75px;height:88px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#EC4899"/></svg>
+<svg class="sh" style="top:58%;left:-35px;width:38px;height:38px;filter:blur(2px)" viewBox="0 0 100 100"><path d="M50 0 L57 43 L100 50 L57 57 L50 100 L43 57 L0 50 L43 43Z" fill="#A78BFA"/></svg>
+<div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:148px;text-align:center;z-index:10"><p class="hd" style="font-size:21px;color:var(--bg)">Your content, in <span class="k">every feed.</span></p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:8px">Created and distributed by AI creators at scale.</p></div>
+<div style="position:absolute;bottom:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta lm">usecreable.com</div></div>
+</div><span class="cl">SB1 · Brand Statement</span></div>
+
+<!-- SB2 stat -->
+<div class="cw"><div class="cd" style="width:175px;height:311px;background:var(--dbg)">
+<!-- Brand shapes: lavender soft blob BL (compact, low) + orange starburst TR (far) + yellow squircle accent -->
+<svg class="sh" style="bottom:-95px;left:-75px;width:140px;height:115px;filter:blur(8px)" viewBox="0 0 100 100"><path d="M50 5 C78 0 100 22 95 50 C100 78 72 100 50 95 C20 100 0 75 5 50 C0 22 22 5 50 5Z" fill="#A78BFA"/></svg>
+<svg class="sh" style="top:-85px;right:-60px;width:90px;height:90px;filter:blur(4px)" viewBox="0 0 100 100"><polygon points="50,5 57,30 82,18 70,42 95,50 70,58 82,82 57,70 50,95 43,70 18,82 30,58 5,50 30,42 18,18 43,30" fill="#F97316"/></svg>
+<svg class="sh" style="top:42%;left:-37px;width:32px;height:32px;filter:blur(2px)" viewBox="0 0 100 100"><rect x="5" y="5" width="90" height="90" rx="26" fill="#FBBF24"/></svg>
+<div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);text-align:center;z-index:10;width:152px"><p class="hd" style="font-size:50px;color:var(--p)">80%</p><p class="hd" style="font-size:14.5px;color:var(--bg);margin-top:2px">less production time</p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:8px">vs traditional UGC. Real campaign numbers.</p></div>
+<div style="position:absolute;bottom:45px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--mt)">USECREABLE.COM</span></div>
+</div><span class="cl">SB2 · Brand Stat</span></div>
+
+<!-- SB3 screenshot short text (≤80 chars) -->
+<div class="cw"><div class="cd" style="width:175px;height:311px;background:var(--dbg)">
+<!-- Brand shapes: yellow flower TR + magenta drop BL + lavender sparkle BR (lime keyword "312 creators" stays clear) -->
+<svg class="sh" style="top:-95px;right:-65px;width:90px;height:90px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-65px;left:-50px;width:62px;height:75px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#EC4899"/></svg>
+<svg class="sh" style="top:35%;right:-37px;width:40px;height:40px;filter:blur(2px)" viewBox="0 0 100 100"><path d="M50 0 L57 43 L100 50 L57 57 L50 100 L43 57 L0 50 L43 43Z" fill="#A78BFA"/></svg>
+<div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<!-- Photo placeholder of card -->
+<div class="ph" style="top:85px;left:11px;right:11px;bottom:110px;z-index:5;transform:rotate(1deg)"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">DASHBOARD · screenshot della campagna brand con creator count, views totali e CPM medio. Orizzontale, scuro.</div></div>
+<div style="position:absolute;bottom:78px;left:50%;transform:translateX(-50%);z-index:10;text-align:center;width:150px"><p class="hd" style="font-size:13px;color:var(--bg)">One campaign. <span class="k">312 creators.</span></p></div>
+<div style="position:absolute;bottom:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta lm">usecreable.com</div></div>
+</div><span class="cl">SB3 · Brand Screenshot ≤80</span></div>
+
+<!-- SB4 screenshot >80 chars → SPLIT into 2 slides -->
+<!-- SB4a — split slide 1/2: text only -->
+<div class="cw"><div class="cd" style="width:175px;height:311px;background:var(--dbg)">
+<svg class="sh" style="top:-90px;left:-60px;width:90px;height:90px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-70px;right:-55px;width:75px;height:88px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#EC4899"/></svg>
+<div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:148px;text-align:center;z-index:10"><p class="hd" style="font-size:18px;color:var(--bg)">Scale your content <span class="k">without scaling</span> your team.</p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:8px;line-height:1.45">AI creators produce and distribute at scale — you pay only for performance.</p></div>
+</div><span class="cl">SB4 · Split 1/2 — text</span></div>
+
+<!-- SB4b — split slide 2/2: screenshot -->
+<div class="cw"><div class="cd" style="width:175px;height:311px;background:var(--dbg)">
+<svg class="sh" style="top:-95px;right:-60px;width:90px;height:90px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-70px;left:-55px;width:75px;height:88px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#EC4899"/></svg>
+<div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<!-- Screenshot 70% of card -->
+<div class="ph" style="top:85px;left:11px;right:11px;bottom:88px;z-index:5;transform:rotate(-1deg)"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">CAMPAIGN VIEW · budget + numero creator attivi + risultati. Layout scuro.</div></div>
+<div style="position:absolute;bottom:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta lm">usecreable.com</div></div>
+</div><span class="cl">SB4 · Split 2/2 — screenshot</span></div>
+</div>
+
+<!-- FOR CREATORS — cream + pastel shapes -->
+<div class="rl">For Creators — cream, pastel shapes, warm</div>
+<div class="tr">
+<!-- SC1 cream statement with diverse shapes -->
+<div class="cw"><div class="cd" style="width:175px;height:311px;background:var(--bg)">
+<!-- Diverse pastel shapes from brand kit -->
+<!-- Starburst -->
+<svg class="sh" style="top:-61px;left:-39px;width:72px;height:68px" viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="var(--yl)" opacity=".65"/></svg>
+<!-- Solid circle -->
+<div class="sh" style="bottom:-54px;right:-37px;width:70px;height:70px;border-radius:50%;background:var(--lv);opacity:.45"></div>
+<!-- Capsule pill -->
+<div class="sh" style="top:42%;right:-30px;width:36px;height:12px;border-radius:12px;background:var(--pk);opacity:.55;transform:rotate(-12deg)"></div>
+<!-- Diamond -->
+<svg class="sh" style="bottom:30%;left:-33px;width:32px;height:32px" viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="var(--mg)" opacity=".4"/></svg>
+<div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:148px;text-align:center;z-index:10"><p class="hd" style="font-size:21px;color:var(--ink)">No face. No followers. <span class="k">No problem.</span></p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:8px">Brands pay for distribution. You are the distribution.</p></div>
+<div style="position:absolute;bottom:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta dk">usecreable.com</div></div>
+</div><span class="cl">SC1 · Creator Statement</span></div>
+
+<!-- SC2 lime -->
+<div class="cw"><div class="cd" style="width:175px;height:311px;background:var(--p)">
+<!-- Shapes on lime: yellow, ink, magenta -->
+<svg class="sh" style="top:-61px;right:-39px;width:74px;height:70px" viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="var(--yl)" opacity=".6"/></svg>
+<div class="sh" style="bottom:-54px;left:-37px;width:68px;height:68px;border-radius:50%;background:var(--ink);opacity:.06"></div>
+<div class="sh" style="top:40%;right:-4px;width:20px;height:20px;border-radius:50%;background:var(--mg);opacity:.3"></div>
+<!-- Squircle -->
+<div class="sh" style="bottom:25%;left:-31px;width:28px;height:28px;border-radius:6px;background:var(--yl);opacity:.45"></div>
+<div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ll">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:148px;text-align:center;z-index:10"><p class="hd" style="font-size:21px;color:var(--ink)">Turn AI into a real income.</p><p class="bd" style="font-size:9.5px;color:var(--ink);opacity:.65;margin-top:8px">Side hustle or full time — you decide.</p></div>
+<div style="position:absolute;bottom:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta dk">usecreable.com</div></div>
+</div><span class="cl">SC2 · Creator Statement · lime</span></div>
+
+<!-- SC3 Creator Screenshot ≤80 chars (mirror of SB3) -->
+<div class="cw"><div class="cd" style="width:175px;height:311px;background:var(--bg)">
+<!-- Flower TR -->
+<svg class="sh" style="top:-59px;right:-37px;width:60px;height:60px" viewBox="0 0 100 100"><circle cx="50" cy="25" r="18" fill="var(--lv)" opacity=".45"/><circle cx="75" cy="50" r="18" fill="var(--lv)" opacity=".45"/><circle cx="50" cy="75" r="18" fill="var(--lv)" opacity=".45"/><circle cx="25" cy="50" r="18" fill="var(--lv)" opacity=".45"/><circle cx="50" cy="50" r="14" fill="var(--yl)" opacity=".6"/></svg>
+<!-- Drop BL -->
+<svg class="sh" style="bottom:-50px;left:-33px;width:44px;height:55px" viewBox="0 0 100 120"><path d="M50 10 C50 10 85 55 85 75 C85 97 69 110 50 110 C31 110 15 97 15 75 C15 55 50 10 50 10Z" fill="var(--or)" opacity=".4"/></svg>
+<div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<!-- Screenshot of card -->
+<div class="ph pc" style="top:85px;left:11px;right:11px;bottom:110px;z-index:5;transform:rotate(1deg)"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">DASHBOARD CREATOR · $1,340 earnings + lista campagne attive (Nike, Glossier), CPM medio. Vista chiara cream.</div></div>
+<div style="position:absolute;bottom:78px;left:50%;transform:translateX(-50%);z-index:10;text-align:center;width:150px"><p class="hd" style="font-size:13px;color:var(--ink)">One dashboard. <span class="k">All earnings.</span></p></div>
+<div style="position:absolute;bottom:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta dk">usecreable.com</div></div>
+</div><span class="cl">SC3 · Creator Screenshot ≤80 chars</span></div>
+
+<!-- SC4 Creator Stat (cream, mirror of SB2) -->
+<div class="cw"><div class="cd" style="width:175px;height:311px;background:var(--bg)">
+<!-- Pastel shapes: yellow starburst TL, lavender soft blob BR, pink capsule -->
+<svg class="sh" style="top:-61px;left:-39px;width:72px;height:68px" viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="var(--yl)" opacity=".7"/></svg>
+<svg class="sh" style="bottom:-52px;right:-35px;width:62px;height:58px" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--lv)" opacity=".5"/></svg>
+<div class="sh" style="top:48%;right:-30px;width:38px;height:12px;border-radius:12px;background:var(--pk);opacity:.55;transform:rotate(-10deg)"></div>
+<div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);text-align:center;z-index:10;width:152px"><p class="hd" style="font-size:50px;color:var(--p)">$1,340</p><p class="hd" style="font-size:14.5px;color:var(--ink);opacity:.9">earned last month</p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:5px">— a real creator on Usecreable</p></div>
+<div style="position:absolute;bottom:45px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--mt)">USECREABLE.COM</span></div>
+</div><span class="cl">SC4 · Creator Stat</span></div>
+
+<!-- SC5 Creator Screenshot >80 chars → SPLIT into 2 slides -->
+<!-- SC5a — split slide 1/2: text only -->
+<div class="cw"><div class="cd" style="width:175px;height:311px;background:var(--bg)">
+<svg class="sh" style="top:-57px;left:-35px;width:56px;height:52px" viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="var(--mg)" opacity=".45"/></svg>
+<svg class="sh" style="bottom:-50px;right:-33px;width:48px;height:60px" viewBox="0 0 100 120"><path d="M50 10 C50 10 85 55 85 75 C85 97 69 110 50 110 C31 110 15 97 15 75 C15 55 50 10 50 10Z" fill="var(--yl)" opacity=".55"/></svg>
+<div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:148px;text-align:center;z-index:10"><p class="hd" style="font-size:18px;color:var(--ink)">Pick a brief, create with AI, <span class="k">get paid weekly.</span></p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:8px;line-height:1.45">Watch the views — and the payouts — compound week after week.</p></div>
+</div><span class="cl">SC5 · Split 1/2 — text</span></div>
+
+<!-- SC5b — split slide 2/2: screenshot -->
+<div class="cw"><div class="cd" style="width:175px;height:311px;background:var(--bg)">
+<svg class="sh" style="top:-55px;right:-35px;width:56px;height:52px" viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="var(--mg)" opacity=".45"/></svg>
+<svg class="sh" style="bottom:-50px;left:-33px;width:48px;height:60px" viewBox="0 0 100 120"><path d="M50 10 C50 10 85 55 85 75 C85 97 69 110 50 110 C31 110 15 97 15 75 C15 55 50 10 50 10Z" fill="var(--yl)" opacity=".55"/></svg>
+<div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<!-- Screenshot 70% of card -->
+<div class="ph pc" style="top:85px;left:11px;right:11px;bottom:88px;z-index:5;transform:rotate(1deg)"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">PAYOUT VIEW · storico pagamenti con date, importi, brands. Tabella semplice cream.</div></div>
+<div style="position:absolute;bottom:45px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta dk">usecreable.com</div></div>
+</div><span class="cl">SC5 · Split 2/2 — screenshot</span></div>
+</div>
+
+<!-- ORIGINAL STORIES from uploaded reference file (S1-S4 faithfully converted) -->
+<div class="rl">Original stories (from reference file)</div>
+<div class="tr">
+<!-- S1 — Solo scritta cream -->
+<div class="cw"><div class="cd" style="width:180px;height:320px;background:var(--bg)">
+<svg class="sh" style="left:-45px;top:-108px;width:72px;height:68px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--yl)" opacity=".8"/></svg>
+<svg class="sh" style="left:120px;top:260px;width:80px;height:74px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--lv)" opacity=".55"/></svg>
+<div class="sh" style="left:148px;top:40px;width:32px;height:32px;border-radius:50%;background:var(--or);opacity:.5"></div>
+<div class="sh" style="left:-33px;top:200px;width:52px;height:16px;border-radius:16px;background:var(--pk);opacity:.6;transform:rotate(-12deg)"></div>
+<!-- Logo full -->
+<div style="position:absolute;top:47px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-54%);width:152px;text-align:center;z-index:10"><p style="font:900 22px/1.05 'Poppins',sans-serif;letter-spacing:-.04em;color:var(--ink)">No face.<br/>No followers.<br/><span style="color:var(--p)">No problem.</span></p></div>
+<div style="position:absolute;bottom:47px;left:50%;transform:translateX(-50%);z-index:10"><div style="display:inline-flex;align-items:center;gap:4px;background:var(--ink);color:var(--p);border-radius:100px;padding:6px 14px;font:800 10px/1 'Poppins',sans-serif;letter-spacing:-.01em">usecreable.com</div></div>
+</div><span class="cl">Solo scritta</span></div>
+
+<!-- S2 — Solo scritta dark -->
+<div class="cw"><div class="cd" style="width:180px;height:320px;background:var(--dbg)">
+<!-- Evernote shapes: lime flower TR + orange drop BL + lavender sparkle -->
+<svg class="sh" style="top:-95px;right:-65px;width:90px;height:90px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-65px;left:-55px;width:72px;height:84px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#F97316"/></svg>
+<svg class="sh" style="top:55%;left:-37px;width:42px;height:42px;filter:blur(2px)" viewBox="0 0 100 100"><path d="M50 0 L57 43 L100 50 L57 57 L50 100 L43 57 L0 50 L43 43Z" fill="#A78BFA"/></svg>
+<!-- Logo dark -->
+<div style="position:absolute;top:47px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-54%);width:152px;text-align:center;z-index:10"><p style="font:900 22px/1.05 'Poppins',sans-serif;letter-spacing:-.04em;color:var(--bg)">AI changed who can create.<br/><span style="color:var(--p)">Everyone.</span></p><p style="font:400 9px/1 'Inter',sans-serif;color:var(--mt);margin-top:8px">And brands are paying for it.</p></div>
+<div style="position:absolute;bottom:47px;left:50%;transform:translateX(-50%);z-index:10"><div style="display:inline-flex;align-items:center;gap:4px;background:var(--p);color:var(--ink);border-radius:100px;padding:6px 14px;font:800 10px/1 'Poppins',sans-serif;letter-spacing:-.01em">usecreable.com</div></div>
+</div><span class="cl">Solo scritta · dark</span></div>
+
+<!-- S3 — Foto + CTA -->
+<div class="cw"><div class="cd" style="width:180px;height:320px;background:var(--bg)">
+<svg class="sh" style="left:120px;top:-112px;width:88px;height:82px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--yl)" opacity=".7"/></svg>
+<div class="sh" style="left:-39px;top:150px;width:38px;height:38px;border-radius:50%;background:var(--pk);opacity:.55"></div>
+<!-- Logo -->
+<div style="position:absolute;top:47px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<!-- Photo placeholder (replaces earnings card) -->
+<div class="ph pc" style="top:88px;left:16px;right:16px;height:100px;z-index:5"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">EARNINGS CARD · numero grande $1,340, label "guadagnati in un mese", chips campaigns + CPM. Sfondo lime tinted.</div></div>
+<div style="position:absolute;bottom:84px;left:50%;transform:translateX(-50%);width:152px;text-align:center;z-index:10"><p style="font:900 16px/1.1 'Poppins',sans-serif;letter-spacing:-.03em;color:var(--ink)">Zero followers.<br/><span style="color:var(--p)">Real earnings.</span></p></div>
+<div style="position:absolute;bottom:47px;left:50%;transform:translateX(-50%);z-index:10"><div style="display:inline-flex;align-items:center;gap:4px;background:var(--ink);color:var(--p);border-radius:100px;padding:6px 14px;font:800 10px/1 'Poppins',sans-serif;letter-spacing:-.01em">usecreable.com</div></div>
+</div><span class="cl">Foto + CTA</span></div>
+
+<!-- S4 — Foto + Scritta dark (dashboard) -->
+<div class="cw"><div class="cd" style="width:180px;height:320px;background:var(--dbg)">
+<!-- Evernote shapes: lime flower TL + magenta drop BR -->
+<svg class="sh" style="top:-90px;left:-60px;width:84px;height:84px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-70px;right:-55px;width:72px;height:84px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#EC4899"/></svg>
+<!-- Logo dark -->
+<div style="position:absolute;top:47px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<!-- Photo placeholder (replaces dashboard mock) -->
+<div class="ph" style="top:85px;left:14px;right:14px;height:128px;z-index:5"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">DASHBOARD CREATOR · earnings del mese ($1,340), campagne attive (Nike + Glossier), CPM per riga. Vista scura.</div></div>
+<div style="position:absolute;bottom:52px;left:50%;transform:translateX(-50%);width:152px;text-align:center;z-index:10"><p style="font:600 9px/1.5 'Inter',sans-serif;color:var(--bg)">$1,340 in un mese.<br/><span style="color:var(--p)">Zero followers. Solo brief + clip AI.</span></p></div>
+</div><span class="cl">Foto + Scritta · dark</span></div>
+</div>
+</div>
+
+<!-- ═══ TAB 2 · CAROUSELS ═══ -->
+<div class="pg" id="p2">
+<h2 class="st">Carousel <span class="hi">Templates</span></h2>
+<p class="ss">1080 × 1350 · 4:5 — Mark only. Educational left-aligned. Creators = pastel shapes. Brands = dark + blur depth.</p>
+
+<div class="rl">C1 · Covers (cream · dark · lime)</div>
+<div class="tr">
+<!-- C1a cream — creator style with pastel shapes -->
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<!-- Starburst -->
+<svg class="sh" style="top:-16px;left:-14px;width:76px;height:72px" viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="var(--yl)" opacity=".65"/></svg>
+<!-- Solid circle -->
+<div class="sh" style="bottom:-14px;right:-12px;width:68px;height:68px;border-radius:50%;background:var(--lv);opacity=.4"></div>
+<!-- Capsule pill -->
+<div class="sh" style="top:38%;right:-4px;width:32px;height:10px;border-radius:10px;background:var(--or);opacity:.4;transform:rotate(-8deg)"></div>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-44%);width:168px;text-align:center;z-index:10"><p class="hd" style="font-size:25px;color:var(--ink)">The road to <span class="k">getting paid.</span></p></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--mt);white-space:nowrap">SWIPE →</span></div>
+</div><span class="cl">C1a · Cover · cream</span></div>
+
+<!-- C1b dark — brand blur depth -->
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--dbg)">
+<!-- Brand shapes: yellow flower TR (compact) + orange drop BL (small) + lavender sparkle -->
+<svg class="sh" style="top:-55px;right:-50px;width:115px;height:115px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-40px;left:-40px;width:90px;height:105px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#F97316"/></svg>
+<svg class="sh" style="top:50%;left:-15px;width:30px;height:30px;filter:blur(2px)" viewBox="0 0 100 100"><path d="M50 0 L57 43 L100 50 L57 57 L50 100 L43 57 L0 50 L43 43Z" fill="#A78BFA"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-44%);width:168px;text-align:center;z-index:10"><p class="hd" style="font-size:23px;color:var(--bg)">Your content, in <span class="k">every feed.</span></p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:7px">AI creators. Real results.</p></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--mt);white-space:nowrap">SWIPE →</span></div>
+</div><span class="cl">C1b · Cover · dark</span></div>
+
+<!-- C1c lime -->
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--p)">
+<svg class="sh" style="top:-16px;right:-14px;width:74px;height:70px" viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="var(--yl)" opacity=".6"/></svg>
+<div class="sh" style="bottom:-14px;left:-12px;width:66px;height:66px;border-radius:50%;background:var(--ink);opacity:.06"></div>
+<div class="sh" style="top:35%;left:-4px;width:18px;height:18px;border-radius:50%;background:var(--mg);opacity:.3"></div>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ll">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-44%);width:168px;text-align:center;z-index:10"><p class="hd" style="font-size:25px;color:var(--ink)">AI content pays. Here's how.</p></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--ink);opacity:.5;white-space:nowrap">SWIPE →</span></div>
+</div><span class="cl">C1c · Cover · lime</span></div>
+</div>
+
+
+<!-- FEATURE SHOWCASE — BRANDS -->
+<div class="rl">C2 · Feature showcase (screenshot variants) — FOR BRANDS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--dbg)">
+<!-- Brand blur shapes: yellow flower TR + orange drop BL -->
+<svg class="sh" style="top:-50px;right:-40px;width:115px;height:115px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-35px;left:-30px;width:95px;height:115px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#F97316"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:58px;left:14px;right:14px;z-index:10"><p class="hd" style="font-size:14.5px;color:var(--bg)">One brief. <span class="k">312 creators.</span></p></div>
+<div class="ph" style="top:104px;left:10px;right:10px;bottom:18px;z-index:5;transform:rotate(1deg)"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">BRAND DASHBOARD · campaign view con creator count, views totali, CPM medio. UI scura.</div></div>
+</div><span class="cl">C2c · Brand Screenshot ≤80</span></div>
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--dbg)">
+<!-- Brand shapes: lavender eye bottom + lime diamond TR + yellow capsule -->
+<svg class="sh" style="bottom:-15px;left:-25px;width:180px;height:90px;filter:blur(7px)" viewBox="0 0 180 90"><path d="M5 45 Q90 5 175 45 Q90 85 5 45Z" fill="#A78BFA"/></svg>
+<svg class="sh" style="top:-25px;right:-20px;width:80px;height:80px;filter:blur(4px)" viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="#FBBF24"/></svg>
+<div class="sh" style="top:55%;right:-12px;width:42px;height:14px;border-radius:14px;background:#FBBF24;filter:blur(3px);transform:rotate(-20deg)"></div>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:54px;left:14px;right:14px;z-index:10;text-align:left"><p class="hd" style="font-size:16px;color:var(--bg);line-height:1.15">Brief in. Content out. <span class="k">In days.</span></p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:7px;line-height:1.45">We match your brief with vetted creators and report on what worked.</p></div>
+<!-- Photo placeholder 40% -->
+<div class="ph" style="bottom:14px;left:10px;right:10px;height:38%;z-index:5"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">BRAND BRIEF VIEW · creator matches, status timeline e summary results. UI scura.</div></div>
+</div><span class="cl">C2b · Brand Screenshot >80</span></div>
+</div>
+
+<!-- FEATURE SHOWCASE — CREATORS -->
+<div class="rl">C2 · Feature showcase (screenshot variants) — FOR CREATORS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<svg class="sh" style="top:-12px;left:-10px;width:56px;height:52px" viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="var(--or)" opacity=".45"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:58px;left:14px;right:14px;z-index:10"><p class="hd" style="font-size:14px;color:var(--ink)">One dashboard. <span class="k">All earnings.</span></p></div>
+<!-- Photo placeholder (screenshot-dominant) -->
+<div class="ph pc" style="top:104px;left:10px;right:10px;bottom:18px;z-index:5;transform:rotate(1deg)"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">DASHBOARD CREATOR · earnings totali, CPM medio, lista campagne. Layout chiaro, leggibile a mobile.</div></div>
+</div><span class="cl">C2a · Creator Screenshot ≤80</span></div>
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<svg class="sh" style="top:-14px;right:-12px;width:60px;height:58px" viewBox="0 0 100 100"><circle cx="50" cy="25" r="18" fill="var(--lv)" opacity=".45"/><circle cx="75" cy="50" r="18" fill="var(--lv)" opacity=".45"/><circle cx="50" cy="75" r="18" fill="var(--lv)" opacity=".45"/><circle cx="25" cy="50" r="18" fill="var(--lv)" opacity=".45"/><circle cx="50" cy="50" r="14" fill="var(--yl)" opacity=".6"/></svg>
+<svg class="sh" style="bottom:-12px;left:-10px;width:48px;height:60px" viewBox="0 0 100 120"><path d="M50 10 C50 10 85 55 85 75 C85 97 69 110 50 110 C31 110 15 97 15 75 C15 55 50 10 50 10Z" fill="var(--or)" opacity=".4"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:54px;left:14px;right:14px;z-index:10;text-align:left"><p class="hd" style="font-size:17px;color:var(--ink)">Pick a brief, create with <span class="k">AI tools.</span></p><p class="bd" style="font-size:9.5px;color:var(--ink);opacity:.7;margin-top:5px;line-height:1.5">Browse open briefs from real brands — use any AI tool you like.</p></div>
+<div class="ph pc" style="bottom:14px;left:10px;right:10px;height:38%;z-index:5"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">BRIEFS VIEW · elenco campagne con budget e CPM. UI cream.</div></div>
+</div><span class="cl">C2d · Creator Screenshot >80</span></div>
+</div>
+
+<!-- EDUCATIONAL — BRANDS -->
+<div class="rl">C3 · Educational (left-aligned) — FOR BRANDS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--dbg)">
+<!-- Brand blur shapes -->
+<svg class="sh" style="top:-45px;left:-40px;width:120px;height:120px;filter:blur(5px)" viewBox="0 0 100 100"><polygon points="50,5 61,38 95,38 67,58 78,92 50,72 22,92 33,58 5,38 39,38" fill="#A78BFA"/></svg>
+<svg class="sh" style="bottom:-30px;right:-30px;width:90px;height:105px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#FBBF24"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:56px;left:14px;right:14px;z-index:10;text-align:left"><p class="hd" style="font-size:17px;color:var(--bg)">Why AI creators <span class="k">scale better.</span></p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:7px;line-height:1.6">One brief = 100+ pieces of content. No production crew, no shoot days, no rights negotiations.</p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:5px;line-height:1.6">Real creators with real audiences distribute the work where it matters: in feeds.</p></div>
+</div><span class="cl">C3c · Brand Educational text</span></div>
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--dbg)">
+<svg class="sh" style="top:-40px;right:-35px;width:100px;height:100px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#A78BFA"/></svg>
+<svg class="sh" style="bottom:-25px;left:-25px;width:90px;height:90px;filter:blur(4px)" viewBox="0 0 100 100"><polygon points="50,5 57,30 82,18 70,42 95,50 70,58 82,82 57,70 50,95 43,70 18,82 30,58 5,50 30,42 18,18 43,30" fill="#FBBF24"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:56px;left:14px;right:14px;z-index:10;text-align:left"><p class="hd" style="font-size:17px;color:var(--bg)">5 steps to ship a <span class="k">brief.</span></p>
+<div style="margin-top:9px">
+<div style="display:flex;gap:5px;align-items:flex-start;margin-bottom:4px"><div style="width:16px;height:16px;border-radius:4px;background:var(--p);display:grid;place-items:center;font:800 9px/1 'Poppins',sans-serif;color:var(--ink);flex-shrink:0">1</div><p class="bd" style="font-size:9.5px;color:var(--mt)">Define the outcome.</p></div>
+<div style="display:flex;gap:5px;align-items:flex-start;margin-bottom:4px"><div style="width:16px;height:16px;border-radius:4px;background:var(--p);display:grid;place-items:center;font:800 9px/1 'Poppins',sans-serif;color:var(--ink);flex-shrink:0">2</div><p class="bd" style="font-size:9.5px;color:var(--mt)">Set tone and format.</p></div>
+<div style="display:flex;gap:5px;align-items:flex-start;margin-bottom:4px"><div style="width:16px;height:16px;border-radius:4px;background:var(--p);display:grid;place-items:center;font:800 9px/1 'Poppins',sans-serif;color:var(--ink);flex-shrink:0">3</div><p class="bd" style="font-size:9.5px;color:var(--mt)">Set CPM and creator count.</p></div>
+<div style="display:flex;gap:5px;align-items:flex-start;margin-bottom:4px"><div style="width:16px;height:16px;border-radius:4px;background:var(--p);display:grid;place-items:center;font:800 9px/1 'Poppins',sans-serif;color:var(--ink);flex-shrink:0">4</div><p class="bd" style="font-size:9.5px;color:var(--mt)">Approve hero submissions.</p></div>
+<div style="display:flex;gap:5px;align-items:flex-start"><div style="width:16px;height:16px;border-radius:4px;background:var(--p);display:grid;place-items:center;font:800 9px/1 'Poppins',sans-serif;color:var(--ink);flex-shrink:0">5</div><p class="bd" style="font-size:9.5px;color:var(--mt)">Track view compounding.</p></div>
+</div></div>
+</div><span class="cl">C3d · Brand Tips list</span></div>
+</div>
+
+<!-- EDUCATIONAL — CREATORS -->
+<div class="rl">C3 · Educational (left-aligned) — FOR CREATORS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<!-- Flower -->
+<svg class="sh" style="top:-10px;right:-8px;width:50px;height:50px" viewBox="0 0 100 100"><circle cx="50" cy="25" r="18" fill="var(--or)" opacity=".4"/><circle cx="75" cy="50" r="18" fill="var(--or)" opacity=".4"/><circle cx="50" cy="75" r="18" fill="var(--or)" opacity=".4"/><circle cx="25" cy="50" r="18" fill="var(--or)" opacity=".4"/><circle cx="50" cy="50" r="14" fill="var(--yl)" opacity=".5"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<!-- Left-aligned text -->
+<div style="position:absolute;top:56px;left:14px;right:14px;z-index:10;text-align:left"><p class="hd" style="font-size:17px;color:var(--ink)">Brands post briefs. You create <span class="k">AI content.</span></p><p class="bd" style="font-size:9.5px;color:var(--ink);opacity:.7;margin-top:7px;line-height:1.6">Pick a campaign that fits your style. Use any AI tool — Kling, Runway, Midjourney. Submit your content. Get paid per view.</p><p class="bd" style="font-size:9.5px;color:var(--ink);opacity:.7;margin-top:5px;line-height:1.6">No followers required. No face on camera. Just good ideas and the right tools.</p></div>
+</div><span class="cl">C3a · Creator Educational text</span></div>
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<!-- Drop shape -->
+<svg class="sh" style="top:-8px;left:-6px;width:40px;height:50px" viewBox="0 0 100 120"><path d="M50 10 C50 10 85 55 85 75 C85 97 69 110 50 110 C31 110 15 97 15 75 C15 55 50 10 50 10Z" fill="var(--yl)" opacity=".45"/></svg>
+<!-- Sparkle -->
+<svg class="sh" style="bottom:-6px;right:-4px;width:32px;height:32px" viewBox="0 0 100 100"><path d="M50 0 L58 38 L100 50 L58 62 L50 100 L42 62 L0 50 L42 38Z" fill="var(--or)" opacity=".35"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<!-- Left-aligned tips -->
+<div style="position:absolute;top:56px;left:14px;right:14px;z-index:10;text-align:left"><p class="hd" style="font-size:17px;color:var(--ink)">5 ways to earn <span class="k">more.</span></p>
+<div style="margin-top:9px">
+<div style="display:flex;gap:5px;align-items:flex-start;margin-bottom:4px"><div style="width:16px;height:16px;border-radius:4px;background:var(--p);display:grid;place-items:center;font:800 9px/1 'Poppins',sans-serif;color:var(--ink);flex-shrink:0">1</div><p class="bd" style="font-size:9.5px;color:var(--ink);opacity:.75">Match the brief mood.</p></div>
+<div style="display:flex;gap:5px;align-items:flex-start;margin-bottom:4px"><div style="width:16px;height:16px;border-radius:4px;background:var(--p);display:grid;place-items:center;font:800 9px/1 'Poppins',sans-serif;color:var(--ink);flex-shrink:0">2</div><p class="bd" style="font-size:9.5px;color:var(--ink);opacity:.75">Hook hard in 2 seconds.</p></div>
+<div style="display:flex;gap:5px;align-items:flex-start;margin-bottom:4px"><div style="width:16px;height:16px;border-radius:4px;background:var(--p);display:grid;place-items:center;font:800 9px/1 'Poppins',sans-serif;color:var(--ink);flex-shrink:0">3</div><p class="bd" style="font-size:9.5px;color:var(--ink);opacity:.75">Submit early. First wins.</p></div>
+<div style="display:flex;gap:5px;align-items:flex-start;margin-bottom:4px"><div style="width:16px;height:16px;border-radius:4px;background:var(--p);display:grid;place-items:center;font:800 9px/1 'Poppins',sans-serif;color:var(--ink);flex-shrink:0">4</div><p class="bd" style="font-size:9.5px;color:var(--ink);opacity:.75">Post on every platform.</p></div>
+<div style="display:flex;gap:5px;align-items:flex-start"><div style="width:16px;height:16px;border-radius:4px;background:var(--p);display:grid;place-items:center;font:800 9px/1 'Poppins',sans-serif;color:var(--ink);flex-shrink:0">5</div><p class="bd" style="font-size:9.5px;color:var(--ink);opacity:.75">Iterate on what wins.</p></div>
+</div></div>
+</div><span class="cl">C3b · Creator Tips list</span></div>
+</div>
+
+<!-- STAT — BRANDS -->
+<div class="rl">C4 · Stat — FOR BRANDS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--dbg)">
+<svg class="sh" style="top:-45px;left:-35px;width:130px;height:130px;filter:blur(6px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-35px;right:-30px;width:110px;height:130px;filter:blur(6px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#A78BFA"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-46%);text-align:center;z-index:10;width:176px"><p class="hd" style="font-size:48px;color:var(--p)">7.4M</p><p class="hd" style="font-size:14.5px;color:var(--bg)">views in 30 days</p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:5px">across 312 creators · one brief</p></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--mt)">USECREABLE.COM</span></div>
+</div><span class="cl">C4b · Brand Stat</span></div>
+</div>
+
+<!-- STAT — CREATORS -->
+<div class="rl">C4 · Stat — FOR CREATORS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<svg class="sh" style="top:-16px;left:-14px;width:74px;height:68px" viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="var(--yl)" opacity=".6"/></svg>
+<div class="sh" style="bottom:-14px;right:-12px;width:66px;height:66px;border-radius:50%;background:var(--or);opacity:.3"></div>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-46%);text-align:center;z-index:10;width:176px"><p class="hd" style="font-size:52px;color:var(--p)">210+</p><p class="hd" style="font-size:14px;color:var(--ink)">creators already earning</p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:5px">...with more joining every week</p></div>
+</div><span class="cl">C4 · Creator Stat</span></div>
+</div>
+
+<!-- QUOTE — BRANDS -->
+<div class="rl">C5 · Quote / social proof — FOR BRANDS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--dbg)">
+<!-- Brand shapes: yellow flower TR (compact) + orange drop BL (small) -->
+<svg class="sh" style="top:-55px;right:-50px;width:110px;height:110px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-40px;left:-40px;width:90px;height:105px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#F97316"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-40%);width:170px;text-align:center;z-index:10"><p class="hd" style="font-size:17px;color:var(--bg);line-height:1.15">She made <span class="k">$1,340</span> last month creating content from her couch.</p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:7px">Her accounts? Started from zero.</p></div>
+</div><span class="cl">C5 · Brand Quote</span></div>
+</div>
+
+<!-- QUOTE — CREATORS -->
+<div class="rl">C5 · Quote / social proof — FOR CREATORS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<svg class="sh" style="top:-14px;left:-12px;width:64px;height:64px" viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="var(--yl)" opacity=".6"/></svg>
+<svg class="sh" style="bottom:-14px;right:-12px;width:60px;height:60px" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--lv)" opacity=".5"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-40%);width:170px;text-align:center;z-index:10"><p class="bd" style="font-size:9.5px;color:var(--mt);margin-bottom:5px">— Maya, AI creator</p><p class="hd" style="font-size:17px;color:var(--ink);line-height:1.15">"$1,340 my first month. <span class="k">No camera, no editing.</span>"</p></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--mt)">USECREABLE.COM</span></div>
+</div><span class="cl">C5b · Creator Quote</span></div>
+</div>
+
+<!-- CTA FINALE — BRANDS -->
+<div class="rl">C6 · CTA finale — FOR BRANDS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--dbg)">
+<svg class="sh" style="bottom:-45px;left:-40px;width:140px;height:120px;filter:blur(7px)" viewBox="0 0 100 100"><path d="M50 5 C78 0 100 22 95 50 C100 78 72 100 50 95 C20 100 0 75 5 50 C0 22 22 5 50 5Z" fill="#A78BFA"/></svg>
+<svg class="sh" style="top:-35px;right:-30px;width:90px;height:90px;filter:blur(4px)" viewBox="0 0 100 100"><polygon points="50,5 57,30 82,18 70,42 95,50 70,58 82,82 57,70 50,95 43,70 18,82 30,58 5,50 30,42 18,18 43,30" fill="#FBBF24"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:172px;text-align:center;z-index:10"><p class="hd" style="font-size:23px;color:var(--bg)">Scale your content. <span class="k">Today.</span></p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:7px">Post a brief. We do the rest.</p></div>
+<div style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta lm">usecreable.com</div></div>
+</div><span class="cl">C6b · Brand CTA finale</span></div>
+</div>
+
+<!-- CTA FINALE — CREATORS -->
+<div class="rl">C6 · CTA finale — FOR CREATORS (cream + lime)</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<svg class="sh" style="top:-16px;right:-14px;width:70px;height:66px" viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="var(--yl)" opacity=".65"/></svg>
+<div class="sh" style="bottom:-14px;left:-12px;width:68px;height:68px;border-radius:50%;background:var(--lv);opacity:.45"></div>
+<div class="sh" style="top:48%;right:-5px;width:36px;height:12px;border-radius:12px;background:var(--pk);opacity:.55;transform:rotate(-10deg)"></div>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:172px;text-align:center;z-index:10"><p class="hd" style="font-size:23px;color:var(--ink)">Start earning. <span class="k">This week.</span></p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:7px">Connect socials, pick a brief, get paid.</p></div>
+<div style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta dk">usecreable.com</div></div>
+</div><span class="cl">C6c · Creator CTA finale</span></div>
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--p)">
+<svg class="sh" style="top:-16px;right:-14px;width:74px;height:68px" viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="var(--yl)" opacity=".6"/></svg>
+<div class="sh" style="bottom:-14px;left:-12px;width:66px;height:66px;border-radius:50%;background:var(--ink);opacity:.06"></div>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ll">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:168px;text-align:center;z-index:10"><p class="hd" style="font-size:23px;color:var(--ink)">Your first payout is closer than you think.</p><p class="bd" style="font-size:8px;color:var(--ink);opacity:.65;margin-top:7px">Most creators earn within their first week.</p></div>
+<div style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta dk">usecreable.com</div></div>
+</div><span class="cl">C6 · CTA finale · lime</span></div>
+</div>
+
+<!-- ORIGINAL CAROUSEL STYLE from uploaded reference file (C1-C5 faithfully converted) -->
+<div class="rl">Original carousel style (from reference file)</div>
+<p style="font:500 11px/1.5 'Inter',sans-serif;color:var(--mt);margin-bottom:14px">Stile carosello dal file di riferimento. Blob organici, opacità alte (0.5–0.9), Badge con pallini lime, sidebar lime accent, UCLogo full (mark + wordmark originale).</p>
+<div class="tr">
+
+<!-- C1 — Cover cream -->
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<!-- Blob yellow top-left -->
+<svg class="sh" style="left:-22px;top:-18px;width:88px;height:82px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--yl)" opacity=".85"/></svg>
+<!-- Blob lavender bottom-right -->
+<svg class="sh" style="left:130px;top:180px;width:90px;height:84px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--lv)" opacity=".6"/></svg>
+<!-- Circle orange top-right -->
+<div class="sh" style="left:160px;top:20px;width:30px;height:30px;border-radius:50%;background:var(--or);opacity:.55"></div>
+<!-- Pill pink left -->
+<div class="sh" style="left:-6px;top:155px;width:44px;height:12px;border-radius:12px;background:var(--pk);opacity:.55;transform:rotate(-10deg)"></div>
+<!-- Logo mark+wordmark -->
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-56%);width:170px;text-align:center;z-index:10"><p style="font:900 28px/1.0 'Poppins',sans-serif;letter-spacing:-.04em;color:var(--ink)">The road to<br/><span style="color:var(--p)">getting paid.</span></p></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10"><span style="font:500 7px/1 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mt);white-space:nowrap">SWIPE →</span></div>
+</div><span class="cl">Cover</span></div>
+
+<!-- C2 — Testo lungo → SPLIT in 2 (Educational, regola §16/§17) -->
+<!-- C2 split 1/2 -->
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<svg class="sh" style="left:130px;top:-18px;width:86px;height:80px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--yl)" opacity=".7"/></svg>
+<svg class="sh" style="left:-22px;top:184px;width:72px;height:66px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--mg)" opacity=".45"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:56px;left:50%;transform:translateX(-50%);z-index:10"><div class="bg" style="font-size:12px;padding:3px 16px">How it works</div></div>
+<div style="position:absolute;top:92px;left:16px;right:16px;z-index:10"><p style="font:900 18px/1.1 'Poppins',sans-serif;letter-spacing:-.03em;color:var(--ink);margin-bottom:9px">Brands post briefs. You create <span style="color:var(--p)">AI content.</span></p><p style="font:500 9.5px/1.5 'Inter',sans-serif;color:var(--ink);opacity:.75">Pick a campaign that fits your style — use any AI tool you like.</p></div>
+</div><span class="cl">Testo lungo · 1/2</span></div>
+
+<!-- C2 split 2/2 -->
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<svg class="sh" style="left:-22px;top:-18px;width:86px;height:80px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--lv)" opacity=".6"/></svg>
+<svg class="sh" style="left:135px;top:186px;width:72px;height:66px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--or)" opacity=".5"/></svg>
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:16px;right:16px;transform:translateY(-50%);z-index:10"><p style="font:900 18px/1.1 'Poppins',sans-serif;letter-spacing:-.03em;color:var(--ink);margin-bottom:9px">Then just <span style="color:var(--p)">hit submit.</span></p><p style="font:500 9.5px/1.5 'Inter',sans-serif;color:var(--ink);opacity:.75">Get paid per view, not per post. No followers, no face — just good ideas and the right tools.</p></div>
+</div><span class="cl">Testo lungo · 2/2</span></div>
+
+<!-- C3 — Screenshot con sidebar lime + Badge "Dashboard" -->
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<svg class="sh" style="left:-20px;top:-16px;width:78px;height:72px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--yl)" opacity=".75"/></svg>
+<svg class="sh" style="left:130px;top:180px;width:88px;height:82px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--or)" opacity=".5"/></svg>
+<div class="sh" style="left:-12px;top:164px;width:36px;height:36px;border-radius:50%;background:var(--lv);opacity:.45"></div>
+<!-- Logo -->
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<!-- Photo placeholder (below logo) -->
+<div class="ph pc" style="top:54px;left:14px;right:14px;height:114px;z-index:6;transform:rotate(1deg)"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">DASHBOARD CREATOR · earnings del mese ($1,340), CPM medio, campagne Nike + Glossier. Vista originale dal file di riferimento.</div></div>
+<!-- Badge -->
+<div style="position:absolute;bottom:46px;left:50%;transform:translateX(-50%);z-index:10"><div class="bg" style="font-size:10px;padding:2px 12px">Dashboard</div></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:170px;text-align:center;z-index:10"><p style="font:600 8px/1 'Inter',sans-serif;color:var(--ink)">$1,340 in a month. <span style="color:var(--p);font-weight:700">Zero followers.</span></p></div>
+</div><span class="cl">Screenshot</span></div>
+
+<!-- C4 — Numero grande -->
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--bg)">
+<svg class="sh" style="left:-20px;top:-18px;width:80px;height:74px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--yl)" opacity=".8"/></svg>
+<svg class="sh" style="left:130px;top:-14px;width:86px;height:80px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--pk)" opacity=".55"/></svg>
+<svg class="sh" style="left:130px;top:178px;width:88px;height:82px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--or)" opacity=".5"/></svg>
+<!-- Logo -->
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-56%);text-align:center;z-index:10;width:176px"><p style="font:900 52px/1 'Poppins',sans-serif;letter-spacing:-.05em;color:var(--p)">210+</p><p style="font:900 16px/1.15 'Poppins',sans-serif;letter-spacing:-.03em;color:var(--ink)">creators already earning</p><p style="font:400 9px/1 'Inter',sans-serif;color:var(--mt);margin-top:6px">...with more joining every week</p></div>
+</div><span class="cl">Numero grande</span></div>
+
+<!-- C5 — CTA finale lime -->
+<div class="cw"><div class="cd" style="width:196px;height:245px;background:var(--p)">
+<svg class="sh" style="left:-20px;top:-18px;width:90px;height:84px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--yl)" opacity=".9"/></svg>
+<svg class="sh" style="left:128px;top:176px;width:92px;height:86px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--ink)" opacity=".1"/></svg>
+<div class="sh" style="left:148px;top:40px;width:30px;height:30px;border-radius:50%;background:var(--mg);opacity:.45"></div>
+<!-- Logo lime variant -->
+<div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ll">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-56%);width:170px;text-align:center;z-index:10"><p style="font:900 24px/1.05 'Poppins',sans-serif;letter-spacing:-.04em;color:var(--ink)">Your first payout is closer than you think.</p><p style="font:400 9px/1.5 'Inter',sans-serif;color:var(--ink);opacity:.7;margin-top:8px">Most creators earn within their first week.</p></div>
+<div style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:10"><div style="display:inline-flex;align-items:center;gap:4px;background:var(--ink);color:var(--p);border-radius:100px;padding:6px 14px;font:800 10px/1 'Poppins',sans-serif;letter-spacing:-.01em">usecreable.com</div></div>
+</div><span class="cl">CTA finale</span></div>
+
+</div>
+</div>
+
+<!-- ═══ TAB 3 · STATIC POSTS ═══ -->
+<div class="pg" id="p3">
+<h2 class="st">Static <span class="hi">Posts</span></h2>
+<p class="ss">1080 × 1080 · 1:1 — Un post, un messaggio. Creators = pastel shapes on cream. Brands = dark + blur depth. CTA = usecreable.com.</p>
+
+<!-- STATEMENT — BRANDS -->
+<div class="rl">P1 · Statement — FOR BRANDS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:215px;height:215px;background:var(--dbg)">
+<!-- Brand shapes: lavender amoeba blob BL (compact, low) + yellow star TR (far corner) -->
+<svg class="sh" style="bottom:-50px;left:-50px;width:150px;height:130px;filter:blur(8px)" viewBox="0 0 200 160"><path d="M20 90 C5 60 25 15 70 20 C115 5 165 25 175 65 C195 100 160 145 110 140 C60 155 25 130 20 90Z" fill="#A78BFA"/></svg>
+<svg class="sh" style="top:-40px;right:-30px;width:80px;height:80px;filter:blur(4px)" viewBox="0 0 100 100"><polygon points="50,5 61,38 95,38 67,58 78,92 50,72 22,92 33,58 5,38 39,38" fill="#FBBF24"/></svg>
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-44%);width:185px;text-align:center;z-index:10"><p class="hd" style="font-size:20px;color:var(--bg)">Your content, in <span class="k">every feed.</span></p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:7px">Created and distributed by AI creators at scale. Pay only for results.</p></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta lm">usecreable.com</div></div>
+</div><span class="cl">P4 · Brand CTA</span></div>
+</div>
+
+<!-- STATEMENT — CREATORS -->
+<div class="rl">P1 · Statement — FOR CREATORS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:215px;height:215px;background:var(--bg)">
+<!-- Starburst -->
+<svg class="sh" style="top:-14px;left:-12px;width:68px;height:64px" viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="var(--yl)" opacity=".65"/></svg>
+<!-- Solid circle -->
+<div class="sh" style="bottom:-12px;right:-10px;width:62px;height:62px;border-radius:50%;background:var(--lv);opacity:.4"></div>
+<!-- Capsule pill -->
+<div class="sh" style="top:40%;right:-3px;width:30px;height:10px;border-radius:10px;background:var(--pk);opacity:.5;transform:rotate(-10deg)"></div>
+<!-- Arrow curvy -->
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-48%);width:185px;text-align:center;z-index:10"><p class="hd" style="font-size:20px;color:var(--ink)">Brands need distribution, not <span class="k">influencers.</span></p></div>
+<div style="position:absolute;bottom:17px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--mt)">USECREABLE.COM</span></div>
+</div><span class="cl">P1 · Creator Statement</span></div>
+</div>
+
+<!-- STAT — BRANDS -->
+<div class="rl">P2 · Stat — FOR BRANDS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:215px;height:215px;background:var(--dbg)">
+<!-- Brand shapes: lavender soft blob BL (compact, low) + orange eye TR (small) + yellow diamond accent -->
+<svg class="sh" style="bottom:-55px;left:-50px;width:140px;height:115px;filter:blur(8px)" viewBox="0 0 100 100"><path d="M50 5 C78 0 100 22 95 50 C100 78 72 100 50 95 C20 100 0 75 5 50 C0 22 22 5 50 5Z" fill="#A78BFA"/></svg>
+<svg class="sh" style="top:-35px;right:-40px;width:110px;height:75px;filter:blur(5px)" viewBox="0 0 180 90"><path d="M5 45 Q90 5 175 45 Q90 85 5 45Z" fill="#F97316"/></svg>
+<svg class="sh" style="top:48%;right:-15px;width:32px;height:32px;filter:blur(2px)" viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="#FBBF24"/></svg>
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-48%);text-align:center;z-index:10;width:185px"><p class="hd" style="font-size:48px;color:var(--p)">7.4M</p><p class="hd" style="font-size:13px;color:var(--bg)">views generated</p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:5px">across all brand campaigns this quarter</p></div>
+<div style="position:absolute;bottom:17px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--mt)">USECREABLE.COM</span></div>
+</div><span class="cl">P8 · Brand Stat</span></div>
+</div>
+
+<!-- STAT — CREATORS -->
+<div class="rl">P2 · Stat — FOR CREATORS (lime)</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:215px;height:215px;background:var(--p)">
+<svg class="sh" style="top:-14px;right:-12px;width:68px;height:64px" viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,55 78,88 50,68 22,88 32,55 5,35 39,35" fill="var(--yl)" opacity=".6"/></svg>
+<div class="sh" style="bottom:-12px;left:-10px;width:56px;height:56px;border-radius:50%;background:var(--ink);opacity:.06"></div>
+<!-- Energy marks -->
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ll">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-48%);text-align:center;z-index:10"><p class="hd" style="font-size:52px;color:var(--ink)">80%</p><p class="hd" style="font-size:13.5px;color:var(--ink);opacity:.85">less production time</p><p class="bd" style="font-size:9.5px;color:var(--ink);opacity:.55;margin-top:4px">vs traditional UGC</p></div>
+<div style="position:absolute;bottom:17px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--ink);opacity:.6">USECREABLE.COM</span></div>
+</div><span class="cl">P2 · Creator Stat · lime</span></div>
+</div>
+
+<!-- SOCIAL PROOF — BRANDS -->
+<div class="rl">P3 · Social proof / Quote — FOR BRANDS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:215px;height:215px;background:var(--dbg)">
+<!-- Brand shapes: yellow flower TR (compact, far) + orange drop BL (small) + lavender sparkle accent -->
+<svg class="sh" style="top:-55px;right:-50px;width:110px;height:110px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-40px;left:-40px;width:90px;height:105px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#F97316"/></svg>
+<svg class="sh" style="top:45%;left:-15px;width:32px;height:32px;filter:blur(2px)" viewBox="0 0 100 100"><path d="M50 0 L57 43 L100 50 L57 57 L50 100 L43 57 L0 50 L43 43Z" fill="#A78BFA"/></svg>
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:185px;text-align:center;z-index:10"><p class="bd" style="font-size:9.5px;color:var(--mt);margin-bottom:5px">Real creator, real numbers:</p><p class="hd" style="font-size:17px;color:var(--bg);line-height:1.15">She made <span class="k">$1,340</span> last month creating content from her couch.</p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:6px">Her accounts? Started from zero.</p></div>
+<div style="position:absolute;bottom:17px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--mt)">USECREABLE.COM</span></div>
+</div><span class="cl">P3 · Brand Social proof</span></div>
+</div>
+
+<!-- SOCIAL PROOF — CREATORS -->
+<div class="rl">P3 · Social proof / Quote — FOR CREATORS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:215px;height:215px;background:var(--bg)">
+<svg class="sh" style="top:-12px;right:-10px;width:60px;height:60px" viewBox="0 0 100 100"><circle cx="50" cy="25" r="18" fill="var(--lv)" opacity=".45"/><circle cx="75" cy="50" r="18" fill="var(--lv)" opacity=".45"/><circle cx="50" cy="75" r="18" fill="var(--lv)" opacity=".45"/><circle cx="25" cy="50" r="18" fill="var(--lv)" opacity=".45"/><circle cx="50" cy="50" r="14" fill="var(--yl)" opacity=".6"/></svg>
+<svg class="sh" style="bottom:-10px;left:-8px;width:50px;height:60px" viewBox="0 0 100 120"><path d="M50 10 C50 10 85 55 85 75 C85 97 69 110 50 110 C31 110 15 97 15 75 C15 55 50 10 50 10Z" fill="var(--or)" opacity=".4"/></svg>
+<svg class="sh" style="top:45%;right:-12px;width:32px;height:32px" viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="var(--mg)" opacity=".4"/></svg>
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:185px;text-align:center;z-index:10"><p class="bd" style="font-size:9.5px;color:var(--mt);margin-bottom:5px">Real creator, real numbers:</p><p class="hd" style="font-size:17px;color:var(--ink);line-height:1.15">She made <span class="k">$1,340</span> last month creating content from her couch.</p><p class="bd" style="font-size:9.5px;color:var(--mt);margin-top:6px">Her accounts? Started from zero.</p></div>
+<div style="position:absolute;bottom:17px;left:50%;transform:translateX(-50%);z-index:10"><span class="eye" style="color:var(--mt)">USECREABLE.COM</span></div>
+</div><span class="cl">P9 · Creator Social proof</span></div>
+</div>
+
+<!-- FEATURE + SCREENSHOT — BRANDS -->
+<div class="rl">P4 · Feature + screenshot — FOR BRANDS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:215px;height:215px;background:var(--dbg)">
+<!-- Brand shapes: yellow flower TL (compact) + magenta drop BR + yellow sparkle far -->
+<svg class="sh" style="top:-55px;left:-50px;width:120px;height:120px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-35px;right:-35px;width:100px;height:120px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#EC4899"/></svg>
+<svg class="sh" style="top:5%;right:-15px;width:32px;height:32px;filter:blur(2px)" viewBox="0 0 100 100"><path d="M50 0 L57 43 L100 50 L57 57 L50 100 L43 57 L0 50 L43 43Z" fill="#FBBF24"/></svg>
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:53px;left:50%;transform:translateX(-50%);width:185px;text-align:center;z-index:10"><p class="hd" style="font-size:15px;color:var(--bg);line-height:1.15">Upload your brief. <span class="k">312 creators</span> are ready.</p></div>
+<!-- Photo placeholder -->
+<div class="ph" style="bottom:48px;left:10px;right:10px;height:38%;z-index:5;transform:rotate(1deg)"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">BRAND DASHBOARD · brief view con creator matches, budget, status timeline. UI scura.</div></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta lm">usecreable.com</div></div>
+</div><span class="cl">P7 · Brand Feature + screenshot</span></div>
+</div>
+
+<!-- FEATURE + SCREENSHOT — CREATORS -->
+<div class="rl">P4 · Feature + screenshot — FOR CREATORS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:215px;height:215px;background:var(--bg)">
+<!-- Flower -->
+<svg class="sh" style="top:-10px;right:-8px;width:48px;height:48px" viewBox="0 0 100 100"><circle cx="50" cy="25" r="18" fill="var(--mg)" opacity=".35"/><circle cx="75" cy="50" r="18" fill="var(--mg)" opacity=".35"/><circle cx="50" cy="75" r="18" fill="var(--mg)" opacity=".35"/><circle cx="25" cy="50" r="18" fill="var(--mg)" opacity=".35"/><circle cx="50" cy="50" r="14" fill="var(--yl)" opacity=".5"/></svg>
+<!-- Drop -->
+<svg class="sh" style="bottom:-8px;left:-6px;width:36px;height:44px" viewBox="0 0 100 120"><path d="M50 10 C50 10 85 55 85 75 C85 97 69 110 50 110 C31 110 15 97 15 75 C15 55 50 10 50 10Z" fill="var(--or)" opacity=".3"/></svg>
+<!-- Arrow -->
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:48px;left:50%;transform:translateX(-50%);width:182px;text-align:center;z-index:10"><p class="hd" style="font-size:15px;color:var(--ink)">Pick a brief, create with AI, <span class="k">get paid.</span></p></div>
+<!-- Photo placeholder -->
+<div class="ph pc" style="bottom:48px;left:10px;right:10px;height:38%;z-index:5;transform:rotate(1deg)"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">BRIEFS VIEW · elenco campagne (Nike, Glossier) con budget, CPM e durata. Cards pulite.</div></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta dk">usecreable.com</div></div>
+</div><span class="cl">P5 · Creator Feature + screenshot</span></div>
+</div>
+
+<!-- DASHBOARD — BRANDS -->
+<div class="rl">P5 · Dashboard — FOR BRANDS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:215px;height:215px;background:var(--dbg)">
+<svg class="sh" style="top:-40px;right:-35px;width:100px;height:100px;filter:blur(5px)" viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-45px;left:-45px;width:130px;height:115px;filter:blur(7px)" viewBox="0 0 100 100"><path d="M50 5 C78 0 100 22 95 50 C100 78 72 100 50 95 C20 100 0 75 5 50 C0 22 22 5 50 5Z" fill="#A78BFA"/></svg>
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div class="ph" style="top:43px;left:10px;right:10px;height:103px;z-index:5;transform:rotate(-1deg)"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">BRAND DASHBOARD · campaign overview con CPM, views, creator count. UI scura.</div></div>
+<div style="position:absolute;bottom:48px;left:50%;transform:translateX(-50%);z-index:10;text-align:center;width:185px"><p class="hd" style="font-size:14.5px;color:var(--bg)">312 creators. <span class="k">7.4M views.</span></p></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta lm">usecreable.com</div></div>
+</div><span class="cl">P10 · Brand Dashboard</span></div>
+</div>
+
+<!-- DASHBOARD — CREATORS -->
+<div class="rl">P5 · Dashboard — FOR CREATORS</div>
+<div class="tr">
+<div class="cw"><div class="cd" style="width:215px;height:215px;background:var(--bg)">
+<!-- Diamond -->
+<svg class="sh" style="top:-8px;left:-6px;width:40px;height:40px" viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="var(--or)" opacity=".35"/></svg>
+<!-- Sparkle -->
+<svg class="sh" style="bottom:-6px;right:-4px;width:32px;height:32px" viewBox="0 0 100 100"><path d="M50 0 L58 38 L100 50 L58 62 L50 100 L42 62 L0 50 L42 38Z" fill="var(--mg)" opacity=".3"/></svg>
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div class="ph pc" style="top:43px;left:10px;right:10px;height:103px;z-index:5;transform:rotate(-1deg)"><div class="pp">+</div><div class="pn">trascina foto qui</div><div class="pds">DASHBOARD CREATOR · earnings + CPM + righe campagne (Nike, Glossier). Vista completa.</div></div>
+<div style="position:absolute;bottom:48px;left:50%;transform:translateX(-50%);z-index:10;text-align:center;width:185px"><p class="hd" style="font-size:14px;color:var(--ink)">$1,340 in a month. <span class="k">Zero followers.</span></p></div>
+<div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:10"><div class="cta dk">usecreable.com</div></div>
+</div><span class="cl">P6 · Creator Dashboard</span></div>
+</div>
+
+<!-- ORIGINAL STATIC POSTS from uploaded reference file (P1-P4 faithfully converted) -->
+<div class="rl">Original static posts (from reference file)</div>
+<div class="tr">
+<!-- P1 — Statement quote cream -->
+<div class="cw"><div class="cd" style="width:220px;height:220px;background:var(--bg)">
+<svg class="sh" style="left:-18px;top:-16px;width:80px;height:74px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--yl)" opacity=".82"/></svg>
+<svg class="sh" style="left:152px;top:148px;width:86px;height:80px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--lv)" opacity=".55"/></svg>
+<div class="sh" style="left:168px;top:16px;width:28px;height:28px;border-radius:50%;background:var(--or);opacity:.5"></div>
+<div class="sh" style="left:-6px;top:138px;width:40px;height:10px;border-radius:10px;background:var(--pk);opacity:.5;transform:rotate(-8deg)"></div>
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:188px;text-align:center;z-index:10"><p style="font:900 22px/1.05 'Poppins',sans-serif;letter-spacing:-.04em;color:var(--ink)">Brands need<br/>distribution,<br/>not <span style="color:var(--p)">influencers.</span></p></div>
+<div style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);z-index:10"><span style="font:500 7px/1 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mt)">USECREABLE.COM</span></div>
+</div><span class="cl">Statement quote</span></div>
+
+<!-- P2 — Stat lime -->
+<div class="cw"><div class="cd" style="width:220px;height:220px;background:var(--p)">
+<svg class="sh" style="left:-20px;top:-18px;width:88px;height:82px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--yl)" opacity=".88"/></svg>
+<svg class="sh" style="left:148px;top:142px;width:92px;height:86px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--ink)" opacity=".1"/></svg>
+<div class="sh" style="left:-10px;top:148px;width:34px;height:34px;border-radius:50%;background:var(--mg);opacity:.4"></div>
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ll">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);text-align:center;z-index:10"><p style="font:900 54px/1 'Poppins',sans-serif;letter-spacing:-.05em;color:var(--ink)">80%</p><p style="font:800 13px/1 'Poppins',sans-serif;color:var(--ink);opacity:.8;letter-spacing:-.02em">less production time</p><p style="font:400 8px/1 'Inter',sans-serif;color:var(--ink);opacity:.6;margin-top:4px">vs traditional UGC</p></div>
+</div><span class="cl">Stat · lime</span></div>
+
+<!-- P3 — Social proof dark -->
+<div class="cw"><div class="cd" style="width:220px;height:220px;background:var(--dbg)">
+<!-- Brand shapes: yellow flower TR (compact, far) + orange drop BL (small) + lavender sparkle accent -->
+<svg class="sh" style="top:-55px;right:-50px;width:115px;height:115px;filter:blur(5px)" viewBox="0 0 100 100"><circle cx="50" cy="22" r="22" fill="#FBBF24"/><circle cx="78" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="78" r="22" fill="#FBBF24"/><circle cx="22" cy="50" r="22" fill="#FBBF24"/><circle cx="50" cy="50" r="24" fill="#FBBF24"/></svg>
+<svg class="sh" style="bottom:-40px;left:-40px;width:90px;height:105px;filter:blur(5px)" viewBox="0 0 100 120"><path d="M50 5 C50 5 88 55 88 78 C88 100 70 115 50 115 C30 115 12 100 12 78 C12 55 50 5 50 5Z" fill="#F97316"/></svg>
+<svg class="sh" style="bottom:20%;right:-15px;width:32px;height:32px;filter:blur(2px)" viewBox="0 0 100 100"><path d="M50 0 L57 43 L100 50 L57 57 L50 100 L43 57 L0 50 L43 43Z" fill="#A78BFA"/></svg>
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m ld">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:188px;text-align:center;z-index:10"><p style="font:400 9px/1 'Inter',sans-serif;color:var(--mt);margin-bottom:6px">Real creator, real numbers:</p><p style="font:900 19px/1.15 'Poppins',sans-serif;letter-spacing:-.03em;color:var(--bg)">She made <span style="color:var(--p)">$1,340</span> last month creating content from her couch.</p><p style="font:400 9px/1 'Inter',sans-serif;color:var(--mt);margin-top:8px">Her accounts? Started from zero.</p></div>
+</div><span class="cl">Social proof · dark</span></div>
+
+<!-- P4 — For brands cream -->
+<div class="cw"><div class="cd" style="width:220px;height:220px;background:var(--bg)">
+<svg class="sh" style="left:148px;top:-18px;width:90px;height:84px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--yl)" opacity=".7"/></svg>
+<svg class="sh" style="left:-22px;top:142px;width:80px;height:74px;overflow:visible" viewBox="0 0 100 100"><path d="M50 8 C76 3 96 20 94 50 C92 76 72 96 46 92 C20 88 3 66 6 40 C9 14 26 13 50 8Z" fill="var(--lv)" opacity=".5"/></svg>
+<div class="sh" style="left:148px;top:148px;width:48px;height:12px;border-radius:12px;background:var(--or);opacity:.5;transform:rotate(12deg)"></div>
+<div style="position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:10"><div class="ucm"><div class="m lc">UC</div></div></div>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-48%);width:190px;text-align:center;z-index:10"><p style="font:900 20px/1.1 'Poppins',sans-serif;letter-spacing:-.04em;color:var(--ink)">Your content,<br/>in <span style="color:var(--p)">every feed.</span></p><p style="font:400 9px/1.5 'Inter',sans-serif;color:var(--ink);opacity:.75;margin-top:8px">Created and distributed by AI creators at scale. Pay only for results.</p></div>
+<div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:10"><div style="display:inline-flex;align-items:center;gap:4px;background:var(--ink);color:var(--p);border-radius:100px;padding:6px 14px;font:800 10px/1 'Poppins',sans-serif;letter-spacing:-.01em">usecreable.com</div></div>
+</div><span class="cl">For brands</span></div>
+</div>
+</div>
+
+
+
+
+<script>
+function tab(n){
+document.querySelectorAll('.pg').forEach((p,i)=>{p.classList.toggle('on',i===n)});
+document.querySelectorAll('.tabs button').forEach((b,i)=>{b.classList.toggle('on',i===n)});
+}
+
+</script>
+</body>
+</html>

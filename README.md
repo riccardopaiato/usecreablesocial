@@ -5,6 +5,7 @@ The reusable "brain" for producing on-brand UseCreable Instagram cards (Stories 
 ## What's inside
 - **`METHOD.md`** — the step-by-step workflow + the rigid pre-slide checklist. Read this first.
 - **`DESIGN-RULES.md`** — condensed design system: colours, typography scale, shapes, formats, archetypes, CTA rules.
+- **`CREATOR-STORIES.md`** — the "For Creators" cream highlight (Cover→Story 13): per-story specs + reusable recipes (video-in-tile, double carousel, blinking chips, light top-earner cards).
 - **`PROMPT.md`** — a ready-to-paste prompt to hand an AI agent (Claude) so it builds a card following this kit.
 - **`templates/`** — starter HTML for each background/format. Edit copy + shapes, render to JPG.
 - **`render/`** — `render.js` (Playwright → JPG q95) and `SETUP.md` (install fonts + Playwright).
